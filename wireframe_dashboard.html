@@ -1,0 +1,222 @@
+
+<style>
+.wf-nav { display:flex; align-items:center; gap:0; background:var(--color-background-primary); border-bottom:0.5px solid var(--color-border-tertiary); padding:0 16px; height:48px; }
+.wf-nav-logo { font-size:14px; font-weight:500; color:var(--color-text-primary); padding-right:24px; border-right:0.5px solid var(--color-border-tertiary); margin-right:16px; }
+.wf-nav-item { font-size:13px; color:var(--color-text-secondary); padding:14px 12px; cursor:pointer; border-bottom:2px solid transparent; }
+.wf-nav-item.active { color:var(--color-text-primary); border-bottom:2px solid var(--color-text-primary); font-weight:500; }
+.wf-nav-right { margin-left:auto; display:flex; align-items:center; gap:12px; }
+.wf-badge { background:var(--color-background-danger); color:var(--color-text-danger); font-size:11px; padding:2px 7px; border-radius:10px; font-weight:500; }
+.wf-avatar { width:28px; height:28px; border-radius:50%; background:var(--color-background-info); display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:500; color:var(--color-text-info); }
+.wf-body { display:grid; grid-template-columns:220px 1fr 280px; gap:16px; padding:20px 16px; background:var(--color-background-tertiary); min-height:480px; }
+.wf-sidebar { display:flex; flex-direction:column; gap:10px; }
+.wf-card { background:var(--color-background-primary); border:0.5px solid var(--color-border-tertiary); border-radius:var(--border-radius-lg); padding:14px; }
+.wf-card-title { font-size:12px; font-weight:500; color:var(--color-text-secondary); text-transform:uppercase; letter-spacing:.04em; margin-bottom:10px; }
+.wf-student-row { display:flex; align-items:center; gap:10px; padding:7px 0; border-bottom:0.5px solid var(--color-border-tertiary); cursor:pointer; }
+.wf-student-row:last-child { border-bottom:none; }
+.wf-student-row:hover { background:var(--color-background-secondary); margin:0 -14px; padding:7px 14px; border-radius:4px; }
+.wf-avatar-sm { width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:500; flex-shrink:0; }
+.wf-dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+.wf-main { display:flex; flex-direction:column; gap:14px; }
+.wf-metrics { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+.wf-metric { background:var(--color-background-secondary); border-radius:var(--border-radius-md); padding:12px 14px; }
+.wf-metric-val { font-size:24px; font-weight:500; color:var(--color-text-primary); }
+.wf-metric-lbl { font-size:12px; color:var(--color-text-secondary); margin-top:2px; }
+.wf-reunion-card { background:var(--color-background-primary); border:0.5px solid var(--color-border-tertiary); border-radius:var(--border-radius-lg); padding:16px; border-left:3px solid #534AB7; }
+.wf-chip { display:inline-block; background:var(--color-background-secondary); border:0.5px solid var(--color-border-secondary); border-radius:12px; font-size:11px; padding:3px 10px; color:var(--color-text-secondary); margin:2px 2px 2px 0; }
+.wf-chip.area-doc { background:#E1F5EE; color:#085041; border-color:#5DCAA5; }
+.wf-chip.area-psico { background:#EEEDFE; color:#3C3489; border-color:#7F77DD; }
+.wf-chip.area-fono { background:#FAEEDA; color:#633806; border-color:#EF9F27; }
+.wf-obs-row { padding:9px 0; border-bottom:0.5px solid var(--color-border-tertiary); }
+.wf-obs-row:last-child { border-bottom:none; }
+.wf-right { display:flex; flex-direction:column; gap:10px; }
+.wf-btn-primary { background:var(--color-text-primary); color:var(--color-background-primary); border:none; border-radius:var(--border-radius-md); font-size:13px; font-weight:500; padding:8px 14px; cursor:pointer; width:100%; margin-top:8px; }
+.wf-tag-area { font-size:11px; font-weight:500; padding:2px 8px; border-radius:10px; display:inline-block; }
+</style>
+
+<h2 class="sr-only">Wireframe del dashboard principal de la plataforma educativa</h2>
+
+<!-- Navbar -->
+<div class="wf-nav">
+  <span class="wf-nav-logo"><i class="ti ti-school" aria-hidden="true" style="margin-right:6px"></i>EduRed</span>
+  <span class="wf-nav-item active">Inicio</span>
+  <span class="wf-nav-item">Estudiantes</span>
+  <span class="wf-nav-item">Reuniones</span>
+  <span class="wf-nav-item">Estrategias</span>
+  <span class="wf-nav-item">Reportes</span>
+  <div class="wf-nav-right">
+    <span style="font-size:12px;color:var(--color-text-secondary)"><i class="ti ti-building" aria-hidden="true" style="margin-right:4px"></i>Escuela Nº 42</span>
+    <span class="wf-badge">2 alertas</span>
+    <div class="wf-avatar">MG</div>
+  </div>
+</div>
+
+<!-- Cuerpo -->
+<div class="wf-body">
+
+  <!-- Sidebar izquierdo: mis estudiantes -->
+  <div class="wf-sidebar">
+    <div class="wf-card">
+      <div class="wf-card-title"><i class="ti ti-users" aria-hidden="true" style="margin-right:4px"></i>Mis estudiantes</div>
+      <input type="text" placeholder="Buscar..." style="width:100%;font-size:12px;margin-bottom:8px;">
+      <div class="wf-student-row">
+        <div class="wf-avatar-sm" style="background:#EEEDFE;color:#3C3489;">LR</div>
+        <div style="flex:1;min-width:0">
+          <div style="font-size:13px;font-weight:500">López, Ramiro</div>
+          <div style="font-size:11px;color:var(--color-text-secondary)">5º A · Reunión hoy</div>
+        </div>
+        <div class="wf-dot" style="background:#D85A30" title="alerta"></div>
+      </div>
+      <div class="wf-student-row">
+        <div class="wf-avatar-sm" style="background:#E1F5EE;color:#085041;">MF</div>
+        <div style="flex:1;min-width:0">
+          <div style="font-size:13px;font-weight:500">Martínez, Florencia</div>
+          <div style="font-size:11px;color:var(--color-text-secondary)">3º B · Sin obs. 14 días</div>
+        </div>
+        <div class="wf-dot" style="background:#EF9F27" title="pendiente"></div>
+      </div>
+      <div class="wf-student-row">
+        <div class="wf-avatar-sm" style="background:#E6F1FB;color:#0C447C;">TC</div>
+        <div style="flex:1;min-width:0">
+          <div style="font-size:13px;font-weight:500">Torres, Camila</div>
+          <div style="font-size:11px;color:var(--color-text-secondary)">4º A · Al día</div>
+        </div>
+        <div class="wf-dot" style="background:#639922" title="ok"></div>
+      </div>
+      <div class="wf-student-row">
+        <div class="wf-avatar-sm" style="background:#FAEEDA;color:#633806;">GS</div>
+        <div style="flex:1;min-width:0">
+          <div style="font-size:13px;font-weight:500">Gómez, Santiago</div>
+          <div style="font-size:11px;color:var(--color-text-secondary)">2º B · Al día</div>
+        </div>
+        <div class="wf-dot" style="background:#639922" title="ok"></div>
+      </div>
+      <button class="wf-btn-primary" style="background:transparent;color:var(--color-text-secondary);border:0.5px solid var(--color-border-secondary);">Ver todos (12) →</button>
+    </div>
+
+    <div class="wf-card">
+      <div class="wf-card-title"><i class="ti ti-bell" aria-hidden="true" style="margin-right:4px"></i>Alertas</div>
+      <div style="font-size:12px;color:var(--color-text-danger);padding:5px 0;border-bottom:0.5px solid var(--color-border-tertiary);">
+        <i class="ti ti-alert-circle" aria-hidden="true" style="margin-right:4px"></i>Martínez F. sin obs. en 14 días
+      </div>
+      <div style="font-size:12px;color:var(--color-text-warning);padding:5px 0;">
+        <i class="ti ti-clock" aria-hidden="true" style="margin-right:4px"></i>Reunión hoy a las 15:00
+      </div>
+    </div>
+  </div>
+
+  <!-- Centro: actividad reciente + próxima reunión -->
+  <div class="wf-main">
+    <div class="wf-metrics">
+      <div class="wf-metric">
+        <div class="wf-metric-val">12</div>
+        <div class="wf-metric-lbl">Estudiantes a cargo</div>
+      </div>
+      <div class="wf-metric">
+        <div class="wf-metric-val" style="color:var(--color-text-warning)">3</div>
+        <div class="wf-metric-lbl">Obs. pendientes</div>
+      </div>
+      <div class="wf-metric">
+        <div class="wf-metric-val" style="color:var(--color-text-success)">8</div>
+        <div class="wf-metric-lbl">Estrategias activas</div>
+      </div>
+    </div>
+
+    <!-- Próxima reunión -->
+    <div class="wf-reunion-card">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px">
+        <div>
+          <div style="font-size:13px;font-weight:500;color:var(--color-text-secondary);margin-bottom:2px"><i class="ti ti-calendar-event" aria-hidden="true" style="margin-right:4px"></i>Hoy — Martes 8 de junio · 15:00 hs</div>
+          <div style="font-size:16px;font-weight:500">Reunión de equipo interdisciplinario</div>
+          <div style="font-size:12px;color:var(--color-text-secondary);margin-top:4px">Participantes: Dra. Romero · Lic. Vega · Prof. García</div>
+        </div>
+        <button class="wf-btn-primary" style="width:auto;margin-top:0">Preparar reunión →</button>
+      </div>
+      <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:6px">Estudiantes a tratar (4):</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <span class="wf-chip" style="cursor:pointer">López, Ramiro <span style="color:var(--color-text-danger)">●</span></span>
+        <span class="wf-chip">Martínez, Florencia</span>
+        <span class="wf-chip">Torres, Camila</span>
+        <span class="wf-chip">Benítez, Juan</span>
+      </div>
+    </div>
+
+    <!-- Actividad reciente -->
+    <div class="wf-card" style="flex:1">
+      <div class="wf-card-title"><i class="ti ti-activity" aria-hidden="true" style="margin-right:4px"></i>Actividad reciente del equipo</div>
+      <div class="wf-obs-row">
+        <div style="display:flex;gap:8px;align-items:flex-start">
+          <div class="wf-avatar-sm" style="background:#FAEEDA;color:#633806;width:24px;height:24px;font-size:9px">DR</div>
+          <div style="flex:1">
+            <div style="font-size:13px"><span style="font-weight:500">Dra. Romero</span> registró una observación en <span style="color:var(--color-text-info);cursor:pointer">Torres, Camila</span></div>
+            <div style="font-size:11px;color:var(--color-text-secondary)">hace 2 horas · Fonoaudiología</div>
+          </div>
+        </div>
+      </div>
+      <div class="wf-obs-row">
+        <div style="display:flex;gap:8px;align-items:flex-start">
+          <div class="wf-avatar-sm" style="background:#E1F5EE;color:#085041;width:24px;height:24px;font-size:9px">LV</div>
+          <div style="flex:1">
+            <div style="font-size:13px"><span style="font-weight:500">Lic. Vega</span> agregó estrategia en <span style="color:var(--color-text-info);cursor:pointer">López, Ramiro</span></div>
+            <div style="font-size:11px;color:var(--color-text-secondary)">ayer · Psicopedagogía</div>
+          </div>
+        </div>
+      </div>
+      <div class="wf-obs-row">
+        <div style="display:flex;gap:8px;align-items:flex-start">
+          <div class="wf-avatar-sm" style="background:#EEEDFE;color:#3C3489;width:24px;height:24px;font-size:9px">PG</div>
+          <div style="flex:1">
+            <div style="font-size:13px"><span style="font-weight:500">Prof. García</span> cerró reunión del 2 jun · <span style="color:var(--color-text-info);cursor:pointer">Ver acuerdos</span></div>
+            <div style="font-size:11px;color:var(--color-text-secondary)">hace 6 días · Docente</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Columna derecha: acciones rápidas + calendario -->
+  <div class="wf-right">
+    <div class="wf-card">
+      <div class="wf-card-title"><i class="ti ti-bolt" aria-hidden="true" style="margin-right:4px"></i>Acceso rápido</div>
+      <button class="wf-btn-primary" style="background:var(--color-text-primary);color:var(--color-background-primary);margin-bottom:8px">
+        <i class="ti ti-plus" aria-hidden="true" style="margin-right:6px"></i>Nueva observación
+      </button>
+      <button class="wf-btn-primary" style="background:transparent;color:var(--color-text-primary);border:0.5px solid var(--color-border-secondary);margin-bottom:8px">
+        <i class="ti ti-calendar-plus" aria-hidden="true" style="margin-right:6px"></i>Convocar reunión
+      </button>
+      <button class="wf-btn-primary" style="background:transparent;color:var(--color-text-primary);border:0.5px solid var(--color-border-secondary)">
+        <i class="ti ti-book" aria-hidden="true" style="margin-right:6px"></i>Nueva estrategia
+      </button>
+    </div>
+
+    <div class="wf-card">
+      <div class="wf-card-title"><i class="ti ti-calendar" aria-hidden="true" style="margin-right:4px"></i>Próximas reuniones</div>
+      <div style="font-size:13px;padding:7px 0;border-bottom:0.5px solid var(--color-border-tertiary);display:flex;justify-content:space-between">
+        <span><span style="font-weight:500">Hoy</span> · 15:00</span>
+        <span style="font-size:11px;color:var(--color-text-warning);font-weight:500">EN 3 HS</span>
+      </div>
+      <div style="font-size:13px;padding:7px 0;border-bottom:0.5px solid var(--color-border-tertiary);display:flex;justify-content:space-between">
+        <span>Jue 11 jun · 14:00</span>
+        <span style="font-size:11px;color:var(--color-text-secondary)">3 días</span>
+      </div>
+      <div style="font-size:13px;padding:7px 0;display:flex;justify-content:space-between">
+        <span>Mar 16 jun · 15:30</span>
+        <span style="font-size:11px;color:var(--color-text-secondary)">8 días</span>
+      </div>
+    </div>
+
+    <div class="wf-card">
+      <div class="wf-card-title"><i class="ti ti-chart-bar" aria-hidden="true" style="margin-right:4px"></i>Actividad institucional</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        <div style="background:var(--color-background-secondary);padding:10px;border-radius:var(--border-radius-md);text-align:center">
+          <div style="font-size:20px;font-weight:500">47</div>
+          <div style="font-size:11px;color:var(--color-text-secondary)">obs. esta semana</div>
+        </div>
+        <div style="background:var(--color-background-secondary);padding:10px;border-radius:var(--border-radius-md);text-align:center">
+          <div style="font-size:20px;font-weight:500">6</div>
+          <div style="font-size:11px;color:var(--color-text-secondary)">reuniones este mes</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

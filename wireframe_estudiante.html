@@ -1,0 +1,191 @@
+
+<style>
+.st-wrap { background:var(--color-background-tertiary); padding:0; }
+.st-header { background:var(--color-background-primary); border-bottom:0.5px solid var(--color-border-tertiary); padding:16px 20px; display:flex; align-items:flex-start; gap:16px; }
+.st-avatar { width:52px; height:52px; border-radius:50%; background:#EEEDFE; display:flex; align-items:center; justify-content:center; font-size:18px; font-weight:500; color:#3C3489; flex-shrink:0; }
+.st-meta { flex:1; }
+.st-name { font-size:18px; font-weight:500; margin-bottom:4px; }
+.st-info-row { display:flex; gap:16px; flex-wrap:wrap; font-size:12px; color:var(--color-text-secondary); }
+.st-tabs { background:var(--color-background-primary); border-bottom:0.5px solid var(--color-border-tertiary); padding:0 20px; display:flex; gap:0; }
+.st-tab { font-size:13px; padding:11px 14px; color:var(--color-text-secondary); cursor:pointer; border-bottom:2px solid transparent; }
+.st-tab.active { font-weight:500; color:var(--color-text-primary); border-bottom:2px solid var(--color-text-primary); }
+.st-body { display:grid; grid-template-columns:1fr 320px; gap:16px; padding:16px 20px; }
+.st-card { background:var(--color-background-primary); border:0.5px solid var(--color-border-tertiary); border-radius:var(--border-radius-lg); padding:16px; margin-bottom:14px; }
+.st-card-hdr { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
+.st-card-title { font-size:12px; font-weight:500; color:var(--color-text-secondary); text-transform:uppercase; letter-spacing:.04em; }
+.st-filter-row { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:12px; }
+.st-filter-chip { font-size:11px; padding:4px 10px; border-radius:10px; border:0.5px solid var(--color-border-secondary); background:var(--color-background-secondary); color:var(--color-text-secondary); cursor:pointer; }
+.st-filter-chip.active { background:#EEEDFE; color:#3C3489; border-color:#7F77DD; }
+.obs-item { padding:12px 0; border-bottom:0.5px solid var(--color-border-tertiary); }
+.obs-item:last-child { border-bottom:none; }
+.obs-header { display:flex; align-items:center; gap:8px; margin-bottom:6px; }
+.obs-area-badge { font-size:10px; font-weight:500; padding:2px 8px; border-radius:10px; }
+.obs-text { font-size:13px; color:var(--color-text-primary); line-height:1.5; }
+.obs-strat { font-size:12px; color:var(--color-text-secondary); margin-top:4px; font-style:italic; }
+.timeline-dot { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
+.st-right {}
+.progress-bar-wrap { height:6px; background:var(--color-background-secondary); border-radius:3px; overflow:hidden; margin-top:4px; }
+.progress-bar { height:100%; border-radius:3px; }
+.kv-row { display:flex; justify-content:space-between; padding:5px 0; border-bottom:0.5px solid var(--color-border-tertiary); font-size:13px; }
+.kv-row:last-child { border-bottom:none; }
+.kv-key { color:var(--color-text-secondary); }
+.tag-pill { display:inline-block; font-size:11px; padding:2px 8px; border-radius:10px; margin:2px 2px 2px 0; }
+</style>
+
+<div class="st-wrap">
+  <!-- Header -->
+  <div class="st-header">
+    <div class="st-avatar">LR</div>
+    <div class="st-meta">
+      <div class="st-name">López, Ramiro</div>
+      <div class="st-info-row">
+        <span><i class="ti ti-calendar" aria-hidden="true" style="margin-right:3px"></i>12 años · 5º A</span>
+        <span><i class="ti ti-building" aria-hidden="true" style="margin-right:3px"></i>Escuela Nº 42</span>
+        <span><i class="ti ti-user" aria-hidden="true" style="margin-right:3px"></i>Responsable: María López (madre)</span>
+        <span><i class="ti ti-phone" aria-hidden="true" style="margin-right:3px"></i>+54 351 XXX-XXXX</span>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <span style="background:var(--color-background-danger);color:var(--color-text-danger);font-size:11px;padding:3px 10px;border-radius:10px;font-weight:500">Reunión hoy</span>
+      <button style="font-size:13px;font-weight:500;background:var(--color-text-primary);color:var(--color-background-primary);border:none;border-radius:var(--border-radius-md);padding:7px 14px;cursor:pointer">
+        <i class="ti ti-plus" aria-hidden="true" style="margin-right:5px"></i>Nueva observación
+      </button>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="st-tabs">
+    <span class="st-tab active">Historial</span>
+    <span class="st-tab">Estrategias (5)</span>
+    <span class="st-tab">Reuniones (8)</span>
+    <span class="st-tab">Documentos</span>
+    <span class="st-tab">Datos personales</span>
+  </div>
+
+  <!-- Cuerpo 2 columnas -->
+  <div class="st-body">
+
+    <!-- Columna izquierda: historial de observaciones -->
+    <div>
+      <div class="st-card">
+        <div class="st-card-hdr">
+          <span class="st-card-title"><i class="ti ti-file-text" aria-hidden="true" style="margin-right:4px"></i>Observaciones</span>
+          <span style="font-size:12px;color:var(--color-text-secondary)">23 registros · últimos 6 meses</span>
+        </div>
+
+        <!-- Filtros por área -->
+        <div class="st-filter-row">
+          <span class="st-filter-chip active">Todas las áreas</span>
+          <span class="st-filter-chip" style="background:#E1F5EE;color:#085041;border-color:#5DCAA5">Docente</span>
+          <span class="st-filter-chip" style="background:#EEEDFE;color:#3C3489;border-color:#7F77DD">Psicopedagogía</span>
+          <span class="st-filter-chip" style="background:#FAEEDA;color:#633806;border-color:#EF9F27">Fonoaudiología</span>
+          <span class="st-filter-chip">Directivos</span>
+          <select style="font-size:11px;border:0.5px solid var(--color-border-secondary);border-radius:10px;padding:3px 8px;background:var(--color-background-secondary);color:var(--color-text-secondary)">
+            <option>Últimos 6 meses</option>
+            <option>Este año</option>
+            <option>Todo el historial</option>
+          </select>
+        </div>
+
+        <!-- Observaciones -->
+        <div class="obs-item">
+          <div class="obs-header">
+            <div class="timeline-dot" style="background:#7F77DD"></div>
+            <span class="obs-area-badge" style="background:#EEEDFE;color:#3C3489">Psicopedagogía</span>
+            <span style="font-size:11px;color:var(--color-text-secondary)">Lic. Vega · hace 2 días</span>
+          </div>
+          <div class="obs-text">Ramiro mostró avance significativo en comprensión de consignas escritas. Logró resolver 3 de 4 ejercicios sin mediación adulta. Se observa mayor tolerancia a la frustración que en sesiones anteriores.</div>
+          <div class="obs-strat"><i class="ti ti-bulb" aria-hidden="true" style="margin-right:4px"></i>Estrategia aplicada: lectura en voz alta previa + imágenes de apoyo</div>
+        </div>
+
+        <div class="obs-item">
+          <div class="obs-header">
+            <div class="timeline-dot" style="background:#EF9F27"></div>
+            <span class="obs-area-badge" style="background:#FAEEDA;color:#633806">Fonoaudiología</span>
+            <span style="font-size:11px;color:var(--color-text-secondary)">Dra. Romero · hace 5 días</span>
+          </div>
+          <div class="obs-text">Sesión de estimulación del lenguaje expresivo. Incorporó 4 nuevas palabras funcionales. Persiste dificultad en construcción de frases de más de 3 palabras. Se recomienda refuerzo en contexto áulico.</div>
+          <div class="obs-strat" style="color:var(--color-text-warning)"><i class="ti ti-alert-circle" aria-hidden="true" style="margin-right:4px"></i>Requiere coordinación con docente para implementación en aula</div>
+        </div>
+
+        <div class="obs-item">
+          <div class="obs-header">
+            <div class="timeline-dot" style="background:#5DCAA5"></div>
+            <span class="obs-area-badge" style="background:#E1F5EE;color:#085041">Docente</span>
+            <span style="font-size:11px;color:var(--color-text-secondary)">Prof. García · hace 1 semana</span>
+          </div>
+          <div class="obs-text">Durante la clase de matemáticas con materiales concretos Ramiro logró sumar hasta 20. No tolera bien las transiciones bruscas entre actividades. Recomienda anticipación de cambios con 5 min de aviso.</div>
+        </div>
+
+        <div style="text-align:center;padding:10px 0">
+          <button style="font-size:12px;color:var(--color-text-secondary);background:none;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);padding:6px 16px;cursor:pointer">Cargar más observaciones</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Columna derecha: panel de contexto -->
+    <div class="st-right">
+
+      <!-- Resumen de estado -->
+      <div class="st-card">
+        <div class="st-card-title" style="margin-bottom:12px">Estado actual</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px">
+          <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px;text-align:center">
+            <div style="font-size:20px;font-weight:500;color:#639922">↑</div>
+            <div style="font-size:11px;color:var(--color-text-secondary)">Tendencia general</div>
+          </div>
+          <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px;text-align:center">
+            <div style="font-size:20px;font-weight:500">23</div>
+            <div style="font-size:11px;color:var(--color-text-secondary)">obs. registradas</div>
+          </div>
+        </div>
+        <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:6px">Áreas con avance</div>
+        <div style="margin-bottom:10px">
+          <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px"><span>Comprensión lectora</span><span style="font-weight:500">+</span></div>
+          <div class="progress-bar-wrap"><div class="progress-bar" style="width:70%;background:#7F77DD"></div></div>
+        </div>
+        <div style="margin-bottom:10px">
+          <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px"><span>Lenguaje expresivo</span><span style="font-weight:500">~</span></div>
+          <div class="progress-bar-wrap"><div class="progress-bar" style="width:40%;background:#EF9F27"></div></div>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px"><span>Matemática</span><span style="font-weight:500">+</span></div>
+          <div class="progress-bar-wrap"><div class="progress-bar" style="width:60%;background:#5DCAA5"></div></div>
+        </div>
+      </div>
+
+      <!-- Estrategias vigentes -->
+      <div class="st-card">
+        <div class="st-card-hdr">
+          <span class="st-card-title">Estrategias vigentes</span>
+          <span style="font-size:11px;color:var(--color-text-info);cursor:pointer">Ver todas →</span>
+        </div>
+        <div style="font-size:13px;padding:6px 0;border-bottom:0.5px solid var(--color-border-tertiary)">
+          <span class="tag-pill" style="background:#EEEDFE;color:#3C3489">Psicopedagogía</span>
+          <div style="font-size:12px;margin-top:3px">Lectura previa + imágenes de apoyo</div>
+        </div>
+        <div style="font-size:13px;padding:6px 0;border-bottom:0.5px solid var(--color-border-tertiary)">
+          <span class="tag-pill" style="background:#FAEEDA;color:#633806">Fonoaudiología</span>
+          <div style="font-size:12px;margin-top:3px">Modelos de 2-3 palabras en aula</div>
+        </div>
+        <div style="font-size:13px;padding:6px 0">
+          <span class="tag-pill" style="background:#E1F5EE;color:#085041">Docente</span>
+          <div style="font-size:12px;margin-top:3px">Anticipación de cambios de actividad</div>
+        </div>
+      </div>
+
+      <!-- Próxima reunión -->
+      <div class="st-card" style="border-left:3px solid #534AB7">
+        <div class="st-card-title" style="margin-bottom:8px">En la próxima reunión</div>
+        <div style="font-size:13px;font-weight:500;margin-bottom:4px">Hoy · 15:00 hs</div>
+        <div style="font-size:12px;color:var(--color-text-secondary)">Puntos a tratar sobre Ramiro:</div>
+        <ul style="font-size:12px;color:var(--color-text-primary);margin:6px 0 0 16px;line-height:1.7">
+          <li>Coordinación fono–docente para modelos en aula</li>
+          <li>Revisión de adecuación curricular semestral</li>
+        </ul>
+        <button style="font-size:12px;color:var(--color-text-info);background:none;border:none;cursor:pointer;padding:6px 0 0;display:block">+ Agregar punto a la agenda</button>
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,187 @@
+
+<style>
+.re-wrap { background:var(--color-background-tertiary); }
+.re-header { background:var(--color-background-primary); border-bottom:0.5px solid var(--color-border-tertiary); padding:14px 20px; }
+.re-header-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; }
+.re-title { font-size:17px; font-weight:500; }
+.re-meta { display:flex; gap:16px; font-size:12px; color:var(--color-text-secondary); flex-wrap:wrap; }
+.re-status { font-size:11px; font-weight:500; padding:3px 10px; border-radius:10px; }
+.re-body { display:grid; grid-template-columns:260px 1fr; gap:0; min-height:500px; }
+.re-sidebar { background:var(--color-background-primary); border-right:0.5px solid var(--color-border-tertiary); padding:14px; }
+.re-sidebar-title { font-size:11px; font-weight:500; color:var(--color-text-secondary); text-transform:uppercase; letter-spacing:.04em; margin-bottom:10px; }
+.re-student-item { padding:9px 10px; border-radius:var(--border-radius-md); margin-bottom:4px; cursor:pointer; display:flex; align-items:center; gap:10px; }
+.re-student-item:hover { background:var(--color-background-secondary); }
+.re-student-item.active { background:#EEEDFE; }
+.re-student-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+.re-main { padding:18px 20px; overflow:auto; }
+.re-section { background:var(--color-background-primary); border:0.5px solid var(--color-border-tertiary); border-radius:var(--border-radius-lg); padding:16px; margin-bottom:14px; }
+.re-section-hdr { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
+.re-section-title { font-size:13px; font-weight:500; }
+.re-area-row { padding:10px 12px; border-radius:var(--border-radius-md); margin-bottom:8px; border:0.5px solid var(--color-border-tertiary); }
+.re-area-label { font-size:11px; font-weight:500; margin-bottom:4px; }
+.re-area-text { font-size:13px; color:var(--color-text-primary); line-height:1.5; }
+.re-input-area { width:100%; font-size:13px; padding:10px; border:0.5px solid var(--color-border-secondary); border-radius:var(--border-radius-md); background:var(--color-background-secondary); color:var(--color-text-primary); resize:vertical; min-height:80px; }
+.re-acuerdo-item { display:flex; align-items:flex-start; gap:10px; padding:8px 0; border-bottom:0.5px solid var(--color-border-tertiary); }
+.re-acuerdo-item:last-child { border-bottom:none; }
+.re-checkbox { width:16px; height:16px; border:0.5px solid var(--color-border-primary); border-radius:3px; flex-shrink:0; margin-top:2px; }
+.re-btn { font-size:12px; font-weight:500; padding:7px 14px; border-radius:var(--border-radius-md); cursor:pointer; }
+</style>
+
+<div class="re-wrap">
+  <!-- Header -->
+  <div class="re-header">
+    <div class="re-header-top">
+      <div>
+        <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:3px">
+          <i class="ti ti-arrow-left" aria-hidden="true" style="margin-right:4px;cursor:pointer"></i>Reuniones
+        </div>
+        <div class="re-title">Reunión de equipo interdisciplinario</div>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center">
+        <span class="re-status" style="background:#FAEEDA;color:#633806">Preparación previa</span>
+        <button class="re-btn" style="background:var(--color-text-primary);color:var(--color-background-primary);border:none">
+          <i class="ti ti-player-play" aria-hidden="true" style="margin-right:5px"></i>Iniciar reunión
+        </button>
+      </div>
+    </div>
+    <div class="re-meta">
+      <span><i class="ti ti-calendar" aria-hidden="true" style="margin-right:3px"></i>Hoy · Martes 8 de junio · 15:00 hs</span>
+      <span><i class="ti ti-users" aria-hidden="true" style="margin-right:3px"></i>Dra. Romero · Lic. Vega · Prof. García · Dir. Méndez</span>
+      <span><i class="ti ti-map-pin" aria-hidden="true" style="margin-right:3px"></i>Sala de reuniones</span>
+    </div>
+  </div>
+
+  <!-- Cuerpo: sidebar + main -->
+  <div class="re-body">
+    <!-- Sidebar: lista de estudiantes del día -->
+    <div class="re-sidebar">
+      <div class="re-sidebar-title">Estudiantes a tratar (4)</div>
+      <div style="font-size:11px;color:var(--color-text-secondary);margin-bottom:8px">Seleccioná para ver el contexto</div>
+
+      <div class="re-student-item active">
+        <div class="re-student-dot" style="background:#D85A30"></div>
+        <div style="flex:1">
+          <div style="font-size:13px;font-weight:500">López, Ramiro</div>
+          <div style="font-size:11px;color:#3C3489">Resumen listo ✓</div>
+        </div>
+        <span style="font-size:10px;color:var(--color-text-secondary)">5º A</span>
+      </div>
+      <div class="re-student-item">
+        <div class="re-student-dot" style="background:#EF9F27"></div>
+        <div style="flex:1">
+          <div style="font-size:13px;font-weight:500">Martínez, Florencia</div>
+          <div style="font-size:11px;color:var(--color-text-warning)">Sin obs. 14 días</div>
+        </div>
+        <span style="font-size:10px;color:var(--color-text-secondary)">3º B</span>
+      </div>
+      <div class="re-student-item">
+        <div class="re-student-dot" style="background:#639922"></div>
+        <div style="flex:1">
+          <div style="font-size:13px;font-weight:500">Torres, Camila</div>
+          <div style="font-size:11px;color:var(--color-text-success)">Avance reciente</div>
+        </div>
+        <span style="font-size:10px;color:var(--color-text-secondary)">4º A</span>
+      </div>
+      <div class="re-student-item">
+        <div class="re-student-dot" style="background:#888780"></div>
+        <div style="flex:1">
+          <div style="font-size:13px;font-weight:500">Benítez, Juan</div>
+          <div style="font-size:11px;color:var(--color-text-secondary)">Sin novedades</div>
+        </div>
+        <span style="font-size:10px;color:var(--color-text-secondary)">2º B</span>
+      </div>
+
+      <div style="margin-top:16px;padding-top:14px;border-top:0.5px solid var(--color-border-tertiary)">
+        <div class="re-sidebar-title">Participantes confirmados</div>
+        <div style="font-size:12px;padding:4px 0;display:flex;align-items:center;gap:6px">
+          <div style="width:20px;height:20px;border-radius:50%;background:#E1F5EE;display:flex;align-items:center;justify-content:center;font-size:9px;color:#085041;font-weight:500">DR</div>
+          Dra. Romero <span style="font-size:10px;color:var(--color-text-secondary)">Fono</span>
+        </div>
+        <div style="font-size:12px;padding:4px 0;display:flex;align-items:center;gap:6px">
+          <div style="width:20px;height:20px;border-radius:50%;background:#EEEDFE;display:flex;align-items:center;justify-content:center;font-size:9px;color:#3C3489;font-weight:500">LV</div>
+          Lic. Vega <span style="font-size:10px;color:var(--color-text-secondary)">Psicopeda.</span>
+        </div>
+        <div style="font-size:12px;padding:4px 0;display:flex;align-items:center;gap:6px">
+          <div style="width:20px;height:20px;border-radius:50%;background:#EAF3DE;display:flex;align-items:center;justify-content:center;font-size:9px;color:#27500A;font-weight:500">PG</div>
+          Prof. García <span style="font-size:10px;color:var(--color-text-secondary)">Docente</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel principal: contexto del estudiante seleccionado -->
+    <div class="re-main">
+
+      <!-- Contexto rápido del estudiante -->
+      <div class="re-section">
+        <div class="re-section-hdr">
+          <span class="re-section-title"><i class="ti ti-user" aria-hidden="true" style="margin-right:6px"></i>López, Ramiro — Contexto para la reunión</span>
+          <a style="font-size:12px;color:var(--color-text-info);cursor:pointer">Ver ficha completa →</a>
+        </div>
+
+        <!-- Resumen por área (colapsado/expandido) -->
+        <div class="re-area-row" style="background:#EEEDFE;border-color:#AFA9EC">
+          <div class="re-area-label" style="color:#3C3489">Psicopedagogía — Lic. Vega</div>
+          <div class="re-area-text">Avance en comprensión lectora. Logró 3/4 ejercicios sin mediación. Mayor tolerancia a la frustración. Estrategia de imágenes de apoyo funcionando bien.</div>
+        </div>
+        <div class="re-area-row" style="background:#FFF5E8;border-color:#FAC775">
+          <div class="re-area-label" style="color:#633806">Fonoaudiología — Dra. Romero</div>
+          <div class="re-area-text">Incorporó 4 palabras funcionales. Persiste dificultad en frases de +3 palabras. <span style="color:var(--color-text-warning);font-weight:500">Requiere coordinación con docente</span> para modelos en aula.</div>
+        </div>
+        <div class="re-area-row" style="background:#F0FFF7;border-color:#9FE1CB">
+          <div class="re-area-label" style="color:#085041">Docente — Prof. García</div>
+          <div class="re-area-text">Logros en matemática con material concreto. Necesita anticipación de cambios de actividad con 5 min de aviso previo.</div>
+        </div>
+      </div>
+
+      <!-- Agenda de puntos a tratar -->
+      <div class="re-section">
+        <div class="re-section-hdr">
+          <span class="re-section-title"><i class="ti ti-list-check" aria-hidden="true" style="margin-right:6px"></i>Puntos a tratar</span>
+          <button class="re-btn" style="background:transparent;border:0.5px solid var(--color-border-secondary);color:var(--color-text-secondary)">+ Agregar punto</button>
+        </div>
+        <div class="re-acuerdo-item">
+          <div class="re-checkbox" style="background:var(--color-background-success);border-color:var(--color-border-success)">✓</div>
+          <div style="font-size:13px">Coordinación fono–docente para modelos de lenguaje en aula</div>
+        </div>
+        <div class="re-acuerdo-item">
+          <div class="re-checkbox"></div>
+          <div style="font-size:13px">Revisión de adecuación curricular del segundo semestre</div>
+        </div>
+        <div class="re-acuerdo-item">
+          <div class="re-checkbox"></div>
+          <div style="font-size:13px">Evaluación de solicitud de recurso auxiliar en aula</div>
+        </div>
+      </div>
+
+      <!-- Acuerdos y decisiones (se completa durante/post reunión) -->
+      <div class="re-section">
+        <div class="re-section-hdr">
+          <span class="re-section-title"><i class="ti ti-clipboard-check" aria-hidden="true" style="margin-right:6px"></i>Acuerdos y decisiones</span>
+          <span style="font-size:11px;color:var(--color-text-secondary)">Completar durante o post reunión</span>
+        </div>
+        <textarea class="re-input-area" placeholder="Registrá aquí los acuerdos alcanzados, responsables y plazos..."></textarea>
+        <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+          <div style="font-size:12px;color:var(--color-text-secondary)">Responsable:</div>
+          <select style="font-size:12px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);padding:3px 8px">
+            <option>Sin asignar</option>
+            <option>Dra. Romero</option>
+            <option>Lic. Vega</option>
+            <option>Prof. García</option>
+          </select>
+          <div style="font-size:12px;color:var(--color-text-secondary)">Seguimiento:</div>
+          <input type="date" style="font-size:12px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);padding:3px 8px">
+        </div>
+      </div>
+
+      <!-- Acciones bottom -->
+      <div style="display:flex;justify-content:space-between;align-items:center;padding-top:4px">
+        <button class="re-btn" style="background:transparent;border:0.5px solid var(--color-border-secondary);color:var(--color-text-secondary)">
+          <i class="ti ti-arrow-left" aria-hidden="true" style="margin-right:4px"></i>Estudiante anterior
+        </button>
+        <button class="re-btn" style="background:var(--color-text-primary);color:var(--color-background-primary);border:none">
+          Siguiente estudiante <i class="ti ti-arrow-right" aria-hidden="true" style="margin-left:4px"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

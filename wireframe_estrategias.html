@@ -1,0 +1,163 @@
+
+<style>
+.es-wrap { background:var(--color-background-tertiary); }
+.es-topbar { background:var(--color-background-primary); border-bottom:0.5px solid var(--color-border-tertiary); padding:14px 20px; display:flex; align-items:center; justify-content:space-between; }
+.es-body { display:grid; grid-template-columns:240px 1fr; min-height:520px; gap:0; }
+.es-filter-panel { background:var(--color-background-primary); border-right:0.5px solid var(--color-border-tertiary); padding:16px; }
+.es-filter-title { font-size:11px; font-weight:500; color:var(--color-text-secondary); text-transform:uppercase; letter-spacing:.04em; margin-bottom:8px; margin-top:14px; }
+.es-filter-title:first-child { margin-top:0; }
+.es-filter-option { font-size:13px; padding:6px 8px; border-radius:var(--border-radius-md); cursor:pointer; display:flex; align-items:center; gap:8px; margin-bottom:2px; }
+.es-filter-option:hover { background:var(--color-background-secondary); }
+.es-filter-option.active { background:#EEEDFE; color:#3C3489; }
+.es-count { font-size:11px; color:var(--color-text-secondary); margin-left:auto; }
+.es-main { padding:16px 20px; }
+.es-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:12px; }
+.es-card { background:var(--color-background-primary); border:0.5px solid var(--color-border-tertiary); border-radius:var(--border-radius-lg); padding:14px; cursor:pointer; transition:none; }
+.es-card:hover { border-color:var(--color-border-secondary); }
+.es-card-top { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px; }
+.es-card-title { font-size:14px; font-weight:500; line-height:1.4; flex:1; margin-right:8px; }
+.es-card-area { font-size:10px; font-weight:500; padding:2px 8px; border-radius:10px; flex-shrink:0; }
+.es-card-desc { font-size:12px; color:var(--color-text-secondary); line-height:1.5; margin-bottom:10px; }
+.es-card-footer { display:flex; justify-content:space-between; align-items:center; }
+.es-card-tags { display:flex; gap:4px; flex-wrap:wrap; }
+.es-tag { font-size:10px; padding:2px 7px; border-radius:8px; background:var(--color-background-secondary); color:var(--color-text-secondary); border:0.5px solid var(--color-border-tertiary); }
+.es-card-meta { font-size:11px; color:var(--color-text-secondary); }
+</style>
+
+<div class="es-wrap">
+  <div class="es-topbar">
+    <div>
+      <div style="font-size:17px;font-weight:500">Estrategias pedagógicas</div>
+      <div style="font-size:12px;color:var(--color-text-secondary);margin-top:2px">Base de conocimiento compartida · 34 estrategias</div>
+    </div>
+    <div style="display:flex;gap:8px">
+      <input type="text" placeholder="Buscar estrategias..." style="font-size:13px;width:220px">
+      <button style="font-size:13px;font-weight:500;background:var(--color-text-primary);color:var(--color-background-primary);border:none;border-radius:var(--border-radius-md);padding:7px 14px;cursor:pointer">
+        <i class="ti ti-plus" aria-hidden="true" style="margin-right:5px"></i>Nueva estrategia
+      </button>
+    </div>
+  </div>
+
+  <div class="es-body">
+    <!-- Panel de filtros -->
+    <div class="es-filter-panel">
+      <div class="es-filter-title">Área profesional</div>
+      <div class="es-filter-option active">
+        <span style="width:8px;height:8px;border-radius:50%;background:#7F77DD;flex-shrink:0"></span>
+        Todas las áreas <span class="es-count">34</span>
+      </div>
+      <div class="es-filter-option">
+        <span style="width:8px;height:8px;border-radius:50%;background:#5DCAA5;flex-shrink:0"></span>
+        Docente <span class="es-count">12</span>
+      </div>
+      <div class="es-filter-option">
+        <span style="width:8px;height:8px;border-radius:50%;background:#7F77DD;flex-shrink:0"></span>
+        Psicopedagogía <span class="es-count">9</span>
+      </div>
+      <div class="es-filter-option">
+        <span style="width:8px;height:8px;border-radius:50%;background:#EF9F27;flex-shrink:0"></span>
+        Fonoaudiología <span class="es-count">8</span>
+      </div>
+      <div class="es-filter-option">
+        <span style="width:8px;height:8px;border-radius:50%;background:#888780;flex-shrink:0"></span>
+        Directivos <span class="es-count">5</span>
+      </div>
+
+      <div class="es-filter-title">Objetivo</div>
+      <div class="es-filter-option">Comprensión lectora</div>
+      <div class="es-filter-option">Lenguaje expresivo</div>
+      <div class="es-filter-option">Conducta / regulación</div>
+      <div class="es-filter-option">Matemática</div>
+      <div class="es-filter-option">Comunicación AAC</div>
+      <div class="es-filter-option">Integración social</div>
+
+      <div class="es-filter-title">Estudiante vinculado</div>
+      <div class="es-filter-option">López, Ramiro</div>
+      <div class="es-filter-option">Martínez, Florencia</div>
+      <div class="es-filter-option">Torres, Camila</div>
+      <div class="es-filter-option">Ver todos...</div>
+    </div>
+
+    <!-- Grid de estrategias -->
+    <div class="es-main">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+        <div style="font-size:13px;color:var(--color-text-secondary)">Mostrando 34 estrategias</div>
+        <select style="font-size:12px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);padding:4px 10px">
+          <option>Más recientes</option>
+          <option>Más usadas</option>
+          <option>Por área</option>
+        </select>
+      </div>
+      <div class="es-grid">
+
+        <div class="es-card">
+          <div class="es-card-top">
+            <div class="es-card-title">Lectura en voz alta previa a la tarea</div>
+            <span class="es-card-area" style="background:#EEEDFE;color:#3C3489">Psicopedagogía</span>
+          </div>
+          <div class="es-card-desc">El docente lee la consigna en voz alta antes de que el estudiante la aborde de forma independiente, combinado con imágenes de apoyo visual.</div>
+          <div class="es-card-footer">
+            <div class="es-card-tags">
+              <span class="es-tag">comprensión</span>
+              <span class="es-tag">autonomía</span>
+            </div>
+            <div class="es-card-meta">Usada en 3 estudiantes</div>
+          </div>
+        </div>
+
+        <div class="es-card">
+          <div class="es-card-top">
+            <div class="es-card-title">Anticipación de cambios de actividad</div>
+            <span class="es-card-area" style="background:#E1F5EE;color:#085041">Docente</span>
+          </div>
+          <div class="es-card-desc">Avisar con 5 minutos de anticipación antes de cambiar de actividad. Uso de temporizador visual. Reduce ansiedad y comportamientos disruptivos.</div>
+          <div class="es-card-footer">
+            <div class="es-card-tags">
+              <span class="es-tag">conducta</span>
+              <span class="es-tag">transiciones</span>
+            </div>
+            <div class="es-card-meta">Usada en 5 estudiantes</div>
+          </div>
+        </div>
+
+        <div class="es-card">
+          <div class="es-card-top">
+            <div class="es-card-title">Modelos de 2-3 palabras en contexto áulico</div>
+            <span class="es-card-area" style="background:#FAEEDA;color:#633806">Fonoaudiología</span>
+          </div>
+          <div class="es-card-desc">El docente ofrece modelos lingüísticos breves adaptados al nivel expresivo del estudiante durante actividades cotidianas. Coordinación fono-docente.</div>
+          <div class="es-card-footer">
+            <div class="es-card-tags">
+              <span class="es-tag">lenguaje</span>
+              <span class="es-tag">aula</span>
+            </div>
+            <div class="es-card-meta">Usada en 2 estudiantes</div>
+          </div>
+        </div>
+
+        <div class="es-card">
+          <div class="es-card-top">
+            <div class="es-card-title">Material concreto en matemática</div>
+            <span class="es-card-area" style="background:#E1F5EE;color:#085041">Docente</span>
+          </div>
+          <div class="es-card-desc">Uso de objetos manipulables (bloques, fichas, regletas) para representar operaciones abstractas. Graduar el retiro del material a medida que avanza.</div>
+          <div class="es-card-footer">
+            <div class="es-card-tags">
+              <span class="es-tag">matemática</span>
+              <span class="es-tag">concreto</span>
+            </div>
+            <div class="es-card-meta">Usada en 7 estudiantes</div>
+          </div>
+        </div>
+
+        <div class="es-card" style="border:0.5px dashed var(--color-border-secondary);display:flex;align-items:center;justify-content:center;min-height:140px;cursor:pointer">
+          <div style="text-align:center;color:var(--color-text-secondary)">
+            <i class="ti ti-plus" aria-hidden="true" style="font-size:24px;display:block;margin-bottom:6px"></i>
+            <div style="font-size:13px">Nueva estrategia</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
