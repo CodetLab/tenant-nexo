@@ -13,7 +13,7 @@ export function TenantProvider({ children }: { children: ReactNode }) {
   const [loadingTenant, setLoadingTenant] = useState(true);
 
   useEffect(() => {
-    let slug = 'pathway'; // Tenant por defecto 
+    let slug = 'nexo'; // Tenant por defecto 
 
     setTenantSlug(slug);
     

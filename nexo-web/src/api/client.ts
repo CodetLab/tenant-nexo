@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "https://api-oyh9.onrender.com/api",
+  baseURL: import.meta.env.VITE_API_URL,
 });
 
 // Interceptor: Antes de que salga CUALQUIER petición al Backend Core,
