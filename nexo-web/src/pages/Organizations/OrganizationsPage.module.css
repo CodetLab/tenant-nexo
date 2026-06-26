@@ -1,0 +1,59 @@
+.container {
+    padding: 32px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 20px;
+    transition: 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+}
+
+.card h2 {
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+.slug {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 20px;
+    background: #eef2ff;
+    color: #4338ca;
+    font-size: 14px;
+}
+
+.date {
+    margin-top: 16px;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.empty {
+    padding: 48px;
+    text-align: center;
+    border: 2px dashed #d1d5db;
+    border-radius: 12px;
+}
+
+.error {
+    color: #dc2626;
+}

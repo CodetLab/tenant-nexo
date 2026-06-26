@@ -26,6 +26,7 @@ import MeetingDetailPage from "../../pages/MeetingDetail/MeetingDetailPage";
 import StrategiesPage from "../../pages/Strategies/StrategiesPage";
 
 import LogoutPage from "../../pages/LogoutPage";
+import OrganizationsPage from "../../pages/Organizations/OrganizationsPage";
 
 export const router = createBrowserRouter([
   {
@@ -77,6 +78,10 @@ export const router = createBrowserRouter([
           {
             path: "strategies",
             element: <StrategiesPage />,
+          },
+          {
+            path: "organizations",
+            element: <OrganizationsPage />,
           },
         ],
       },
