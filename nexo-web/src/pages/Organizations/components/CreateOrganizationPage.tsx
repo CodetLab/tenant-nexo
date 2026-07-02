@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import {
     createOrganization,
-} from "../../services/organization.service";
+} from "../../../services/organization.service";
 
 export default function CreateOrganizationPage() {
     const navigate =

@@ -2,30 +2,30 @@ import { Request, Response } from "express";
 
 import * as service from "./organization.service";
 
+type Params = {
+  id: string;
+};
+
 export async function create(
   req: Request,
   res: Response
 ) {
-  const organization =
-    await service.create(
-      req.body.name,
-      req.body.slug,
-      req.context!.profileId!
-    );
-
-  res.status(201).json(
-    organization
+  const organization = await service.create(
+    req.body.name,
+    req.body.slug,
+    req.context!.profileId!
   );
+
+  res.status(201).json(organization);
 }
 
 export async function my(
   req: Request,
   res: Response
 ) {
-  const organization =
-    await service.my(
-      req.context!.profileId!
-    );
+  const organization = await service.my(
+    req.context!.profileId!
+  );
 
   res.json(organization);
 }
@@ -38,4 +38,45 @@ export async function list(
     await service.list();
 
   res.json(organizations);
+}
+
+export async function update(
+  req: Request<Params>,
+  res: Response
+) {
+  const organization =
+    await service.update(
+      req.params.id,
+      req.body.name,
+      req.body.slug
+    );
+
+  res.json(organization);
+}
+
+export async function members(
+  req: Request<Params>,
+  res: Response
+) {
+  const members =
+    await service.members(
+      req.params.id
+    );
+
+  res.json(members);
+}
+
+export async function invite(
+  req: Request<Params>,
+  res: Response
+) {
+  const invitation =
+    await service.invite(
+      req.params.id,
+      req.body.email,
+      req.body.role,
+      req.context!.profileId!
+    );
+
+  res.status(201).json(invitation);
 }

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const localApi = axios.create({
-    baseURL: import.meta.env.VITE_API_URL_NEXO,
+    baseURL: "http://localhost:4000/api",
 
     headers: {
         "Content-Type": "application/json",

@@ -24,4 +24,14 @@ router.get(
     controller.list
 );
 
+router.patch(
+    "/:id",
+    authMiddleware,
+    controller.update
+);
+router.get(
+    "/:id/members",
+    authMiddleware,
+    controller.members
+);
 export default router;

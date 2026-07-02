@@ -3,10 +3,10 @@
 import { createBrowserRouter } from "react-router-dom";
 
 import OrganizationCheckPage
-  from "../../pages/Organizations/OrganizationCheckPage";
+  from "../../pages/Organizations/components/OrganizationCheckPage";
 
 import CreateOrganizationPage
-  from "../../pages/Organizations/CreateOrganizationPage";
+  from "../../pages/Organizations/components/CreateOrganizationPage";
 import MainLayout from "../layouts/MainLayout";
 
 import { ProtectedRoute } from "./ProtectedRoute";
@@ -26,7 +26,7 @@ import MeetingDetailPage from "../../pages/MeetingDetail/MeetingDetailPage";
 import StrategiesPage from "../../pages/Strategies/StrategiesPage";
 
 import LogoutPage from "../../pages/LogoutPage";
-import OrganizationsPage from "../../pages/Organizations/OrganizationsPage";
+import OrganizationsPage from "../../pages/Organizations/OrganizationPage/OrganizationsPage";
 
 export const router = createBrowserRouter([
   {

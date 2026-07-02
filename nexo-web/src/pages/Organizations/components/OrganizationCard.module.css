@@ -1,0 +1,101 @@
+/* OrganizationCard.module.css */
+
+.card {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    padding: 24px;
+
+    background: #fff;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+
+    transition:
+        transform .2s,
+        box-shadow .2s,
+        border-color .2s;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+
+    border-color: #d1d5db;
+
+    box-shadow: 0 10px 28px rgba(0, 0, 0, .08);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+}
+
+.header h2 {
+    margin: 0;
+
+    font-size: 22px;
+    font-weight: 600;
+
+    color: #111827;
+}
+
+.slug {
+    display: inline-block;
+
+    margin-top: 6px;
+
+    font-size: 14px;
+
+    color: #6b7280;
+}
+
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+
+    gap: 10px;
+}
+
+.actions button {
+    padding: 8px 14px;
+
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+
+    background: white;
+
+    cursor: pointer;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    transition: .15s;
+}
+
+.actions button:hover {
+    background: #f3f4f6;
+}
+
+.leave {
+    border-color: #ef4444 !important;
+
+    color: #dc2626;
+}
+
+.leave:hover {
+    background: #fef2f2 !important;
+}
+
+.footer {
+    padding-top: 16px;
+
+    border-top: 1px solid #f1f5f9;
+
+    font-size: 14px;
+
+    color: #6b7280;
+}

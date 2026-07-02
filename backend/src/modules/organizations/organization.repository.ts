@@ -82,3 +82,78 @@ export async function listOrganizations() {
 
     return data;
 }
+
+export async function updateOrganization(
+    id: string,
+    name: string,
+    slug: string
+) {
+    const { data, error } = await supabase
+        .from("organizations")
+        .update({
+            name,
+            slug,
+        })
+        .eq("id", id)
+        .select()
+        .single();
+
+    if (error) throw error;
+
+    return data;
+}
+
+export async function getMembers(
+    organizationId: string
+) {
+    const { data, error } = await supabase
+        .from("organization_members")
+        .select(`
+      role,
+      joined_at,
+      profiles (
+        id,
+        username,
+        full_name,
+        avatar_url
+      )
+    `)
+        .eq("organization_id", organizationId);
+
+    if (error) throw error;
+
+    return data;
+}
+
+export async function addMember(
+    organizationId: string,
+    profileId: number,
+    role: string
+) {
+    const { data, error } = await supabase
+        .from("organization_members")
+        .insert({
+            organization_id: organizationId,
+            profile_id: profileId,
+            role,
+        })
+        .select()
+        .single();
+
+    if (error) throw error;
+
+    return data;
+}
+
+export async function removeMember(
+    organizationId: string,
+    profileId: number
+) {
+    const { error } = await supabase
+        .from("organization_members")
+        .delete()
+        .eq("organization_id", organizationId)
+        .eq("profile_id", profileId);
+
+    if (error) throw error;
+}
