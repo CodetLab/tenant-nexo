@@ -111,3 +111,16 @@ export async function myPending(
 
     res.json(invitations);
 }
+
+export async function list(
+    req: Request,
+    res: Response
+) {
+    const invitations =
+        await service.list(
+            req.query.resourceType as string,
+            req.query.resourceId as string
+        );
+
+    res.json(invitations);
+}

@@ -39,4 +39,9 @@ router.post(
     controller.expire
 );
 
+
+router.get(
+    "/all",
+    controller.list
+);
 export default router;

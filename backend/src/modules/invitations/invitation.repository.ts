@@ -131,6 +131,34 @@ export async function updateStatus(
     return data;
 }
 
+export async function findProfileByEmail(email: string) {
+    const { data, error } = await supabase
+        .from("profiles")
+        .select("*")
+        .eq("email", email)
+        .maybeSingle();
+
+    if (error) throw error;
+
+    return data;
+}
+
+export async function isMember(
+    organizationId: string,
+    profileId: number
+) {
+    const { data, error } = await supabase
+        .from("organization_members")
+        .select("profile_id")
+        .eq("organization_id", organizationId)
+        .eq("profile_id", profileId)
+        .maybeSingle();
+
+    if (error) throw error;
+
+    return !!data;
+}
+
 export async function revoke(id: string) {
     return updateStatus(id, "revoked");
 }

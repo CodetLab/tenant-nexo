@@ -45,27 +45,24 @@ export async function members(
 }
 
 
-
 export async function invite(
     organizationId: string,
     email: string,
     role: string,
     invitedBy: number
 ) {
-    const members =
-        await repository.getMembers(
-            organizationId
+    const memberRole =
+        await repository.findMemberRole(
+            organizationId,
+            invitedBy
         );
 
-    const alreadyMember =
-        members.some(
-            (member: any) =>
-                member.profiles?.email === email
-        );
-
-    if (alreadyMember) {
+    if (
+        memberRole !== "owner" &&
+        memberRole !== "admin"
+    ) {
         throw new Error(
-            "User is already a member."
+            "Only owners and admins can invite members."
         );
     }
 

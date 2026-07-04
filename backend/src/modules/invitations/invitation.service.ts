@@ -5,12 +5,12 @@ import {
     InvitationNotFoundError,
     InvitationAlreadyExistsError,
     InvitationExpiredError,
-    InvitationNotPendingError
+    InvitationNotPendingError,
+    UserAlreadyAMemberError,
 } from "./invitation.errors";
 import * as mailService from "./mailer.service";
 import * as templateService from "./invitation.template";
 import * as organizationRepository from "../organizations/organization.repository";
-
 export async function create(
     resourceId: string,
     resourceType: string,
@@ -18,6 +18,23 @@ export async function create(
     role: string,
     invitedBy: number
 ) {
+    if (resourceType === "organization") {
+        const inviterRole =
+            await organizationRepository.findMemberRole(
+                resourceId,
+                invitedBy
+            );
+
+        if (
+            inviterRole !== "owner" &&
+            inviterRole !== "admin"
+        ) {
+            throw new Error(
+                "Only owners and admins can invite members."
+            );
+        }
+    }
+
     const existing =
         await repository.findPending(
             email,
@@ -27,6 +44,29 @@ export async function create(
 
     if (existing.length > 0) {
         throw new InvitationAlreadyExistsError();
+    }
+
+    if (resourceType === "organization") {
+        const profile =
+            await repository.findProfileByEmail(
+                email
+            );
+
+        if (!profile) {
+            throw new Error(
+                "Profile not found"
+            );
+        }
+
+        const isMember =
+            await repository.isMember(
+                resourceId,
+                profile.id
+            );
+
+        if (isMember) {
+            throw new UserAlreadyAMemberError();
+        }
     }
 
     const token = crypto.randomUUID();
@@ -40,6 +80,7 @@ export async function create(
             invitedBy,
             token,
         });
+
     await mailService.sendInvitationMail({
         to: email,
         subject: "Invitation to join",
@@ -50,6 +91,7 @@ export async function create(
             acceptUrl: `http://localhost:4000/invitation/token/${token}`,
         }),
     });
+
     return invitation;
 }
 
@@ -125,6 +167,22 @@ export async function decline(
         throw new InvitationNotFoundError();
     }
 
+    if (invitation.status !== "pending") {
+        throw new InvitationNotPendingError();
+    }
+
+    if (
+        new Date(invitation.expires_at) <
+        new Date()
+    ) {
+        await repository.updateStatus(
+            invitation.id,
+            "expired"
+        );
+
+        throw new InvitationExpiredError();
+    }
+
     return repository.updateStatus(
         invitation.id,
         "declined"
@@ -175,5 +233,15 @@ export async function listPendingByEmail(
 ) {
     return repository.findPendingByEmail(
         email
+    );
+}
+
+export async function list(
+    resourceType: string,
+    resourceId: string
+) {
+    return repository.findByResource(
+        resourceType,
+        resourceId
     );
 }

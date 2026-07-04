@@ -124,7 +124,21 @@ export async function getMembers(
 
     return data;
 }
+export async function findMemberRole(
+    organizationId: string,
+    profileId: number
+) {
+    const { data, error } = await supabase
+        .from("organization_members")
+        .select("role")
+        .eq("organization_id", organizationId)
+        .eq("profile_id", profileId)
+        .maybeSingle();
 
+    if (error) throw error;
+
+    return data?.role ?? null;
+}
 export async function addMember(
     organizationId: string,
     profileId: number,

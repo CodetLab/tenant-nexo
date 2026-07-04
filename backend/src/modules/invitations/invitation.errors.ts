@@ -25,3 +25,11 @@ export class InvitationNotPendingError extends Error {
         );
     }
 }
+
+export class UserAlreadyAMemberError extends Error {
+    constructor() {
+        super(
+            "The user is already a member of this organization."
+        );
+    }
+}
