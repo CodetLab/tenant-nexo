@@ -27,38 +27,38 @@ export default function OrganizationCard({
                 <div>
                     <h2>{organization.name}</h2>
 
-                    <span className={styles.slug}>
+                    <p className={styles.slug}>
                         @{organization.slug}
-                    </span>
-                </div>
+                    </p>
 
-                <div className={styles.actions}>
-                    <button onClick={onEdit}>
-                        Editar
-                    </button>
-
-                    <button onClick={onMembers}>
-                        Miembros
-                    </button>
-
-                    <button onClick={onInvite}>
-                        Invitar
-                    </button>
-
-                    <button
-                        className={styles.leave}
-                        onClick={onLeave}
-                    >
-                        Salir
-                    </button>
+                    <small className={styles.date}>
+                        Creada el{" "}
+                        {new Date(
+                            organization.created_at
+                        ).toLocaleDateString()}
+                    </small>
                 </div>
             </div>
 
-            <div className={styles.footer}>
-                Creada el{" "}
-                {new Date(
-                    organization.created_at
-                ).toLocaleDateString()}
+            <div className={styles.actions}>
+                <button onClick={onMembers}>
+                    Miembros
+                </button>
+
+                <button onClick={onInvite}>
+                    Invitar
+                </button>
+
+                <button onClick={onEdit}>
+                    Configuración
+                </button>
+
+                <button
+                    className={styles.leave}
+                    onClick={onLeave}
+                >
+                    Salir de la organización
+                </button>
             </div>
         </div>
     );

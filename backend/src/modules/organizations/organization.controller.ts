@@ -19,27 +19,16 @@ export async function create(
   res.status(201).json(organization);
 }
 
-export async function my(
-  req: Request,
-  res: Response
-) {
-  const organization = await service.my(
-    req.context!.profileId!
-  );
-
-  res.json(organization);
-}
-
 export async function list(
   req: Request,
   res: Response
 ) {
-  const organizations =
-    await service.list();
+  const organizations = await service.list(
+    req.context!.profileId!
+  );
 
   res.json(organizations);
 }
-
 export async function update(
   req: Request<Params>,
   res: Response
@@ -80,3 +69,14 @@ export async function invite(
 
   res.status(201).json(invitation);
 }
+
+export const leave = async (req: Request, res: Response) => {
+  await service.leaveO(
+    String(req.params.id),
+    req.context!.profileId!
+  );
+
+  res.json({
+    success: true,
+  });
+};

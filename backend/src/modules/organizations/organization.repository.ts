@@ -67,14 +67,21 @@ export async function findMyOrganization(
     return organization;
 }
 
-export async function listOrganizations() {
-    const { data, error } =
-        await supabase
-            .from("organizations")
-            .select("*")
-            .order("created_at", {
-                ascending: false,
-            });
+export async function listOrganizations(
+    profileId: number
+) {
+    const { data, error } = await supabase
+        .from("organizations")
+        .select(`
+      *,
+      organization_members!inner (
+        profile_id
+      )
+    `)
+        .eq("organization_members.profile_id", profileId)
+        .order("created_at", {
+            ascending: false,
+        });
 
     if (error) {
         throw error;
@@ -110,12 +117,11 @@ export async function getMembers(
         .from("organization_members")
         .select(`
       role,
-      joined_at,
+      created_at,
       profiles (
         id,
-        username,
-        full_name,
-        avatar_url
+        name,
+        email
       )
     `)
         .eq("organization_id", organizationId);
@@ -170,4 +176,16 @@ export async function removeMember(
         .eq("profile_id", profileId);
 
     if (error) throw error;
+}
+
+export async function leaveOrganization(
+    organizationId: string,
+    profileId: number
+) {
+    const { error } = await supabase
+        .from("organization_members")
+        .delete()
+        .eq("organization_id", organizationId)
+        .eq("profile_id", profileId);
+
 }

@@ -12,11 +12,6 @@ router.post(
     controller.create
 );
 
-router.get(
-    "/my",
-    authMiddleware,
-    controller.my
-);
 
 router.get(
     "/",
@@ -33,5 +28,11 @@ router.get(
     "/:id/members",
     authMiddleware,
     controller.members
+);
+
+router.post(
+    "/:id/leave",
+    authMiddleware,
+    controller.leave
 );
 export default router;

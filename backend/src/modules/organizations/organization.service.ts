@@ -20,10 +20,19 @@ export async function my(
     );
 }
 
-export async function list() {
-    return repository.listOrganizations();
+export async function leaveO(
+    organizationId: string,
+    profileId: number
+) {
+    return repository.leaveOrganization(
+        organizationId,
+        profileId
+    );
 }
 
+export async function list(profileId: number) {
+    return repository.listOrganizations(profileId);
+}
 export async function update(
     id: string,
     name: string,

@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import {
-    getMyOrganization,
+    getOrganizations,
 } from "../../../services/organization.service";
 
 export default function OrganizationCheckPage() {
@@ -14,7 +14,7 @@ export default function OrganizationCheckPage() {
         async function load() {
             try {
                 const organization =
-                    await getMyOrganization();
+                    await getOrganizations();
 
                 if (!organization) {
                     navigate(

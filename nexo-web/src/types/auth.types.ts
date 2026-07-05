@@ -26,4 +26,5 @@ export interface RegisterInput {
 export interface AuthResponse {
   token: string;
   user: User;
+  emailVerified: boolean
 }
