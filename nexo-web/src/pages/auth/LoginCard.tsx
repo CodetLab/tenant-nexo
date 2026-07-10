@@ -13,7 +13,7 @@ export const LoginCard: React.FC<LoginProps> = ({
   onSwitchToRegister,
 }) => {
   const navigate = useNavigate();
-  const { loginState } = useAuth();
+  const { login } = useAuth();
 
   const [email, setEmail] = useState("");
   const [pin, setPin] = useState("");
@@ -47,7 +47,7 @@ export const LoginCard: React.FC<LoginProps> = ({
       name: email.split("@")[0],
     };
 
-    loginState(token, user);
+    login(token, user);
     await syncMyProfile();
     navigate("/organization-check");
   };

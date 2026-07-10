@@ -12,7 +12,7 @@ export type UpdateOrganizationDto = {
 
 export type InviteMemberDto = {
     email: string;
-    role: "member" | "admin";
+    role: string;
 };
 
 export function getOrganizations() {

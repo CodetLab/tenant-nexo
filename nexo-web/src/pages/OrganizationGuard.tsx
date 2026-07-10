@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import {
-    getMyOrganization,
+    getOrganizations,
 } from "../services/organization.service";
 
 export default function OrganizationGuard() {
@@ -13,7 +13,7 @@ export default function OrganizationGuard() {
         async function check() {
             try {
                 const organization =
-                    await getMyOrganization();
+                    await getOrganizations();
 
                 if (!organization) {
                     navigate(

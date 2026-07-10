@@ -21,6 +21,9 @@ export default function InviteMemberModal({
     const [email, setEmail] =
         useState("");
 
+    const [role, setRole] =
+        useState("member");
+
     const [loading, setLoading] =
         useState(false);
 
@@ -34,10 +37,14 @@ export default function InviteMemberModal({
 
             await inviteMember(
                 organizationId,
-                email
+                {
+                    email: email,
+                    role: role,
+                }
             );
 
             setEmail("");
+            setRole("member");
 
             onClose();
         } finally {
@@ -64,6 +71,16 @@ export default function InviteMemberModal({
                         )
                     }
                 />
+
+                <select
+                    value={role}
+                    onChange={(e) =>
+                        setRole(e.target.value)
+                    }
+                >
+                    <option value="member">Member</option>
+                    <option value="admin">Admin</option>
+                </select>
 
                 <button
                     disabled={loading}

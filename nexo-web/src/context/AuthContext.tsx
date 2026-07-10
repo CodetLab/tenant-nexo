@@ -12,11 +12,11 @@ import { syncMyProfile } from "../services/sync.service";
 interface AuthContextType {
   user: User | null;
   loading: boolean;
-  loginState: (
+  login: (
     token: string,
     userData: User
   ) => void;
-  logoutState: () => void;
+  logout: () => void;
 }
 
 const AuthContext =
@@ -35,7 +35,7 @@ export function AuthProvider({
   const [loading, setLoading] =
     useState(true);
 
-  const logoutState = () => {
+  const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user_data");
 
@@ -46,7 +46,7 @@ export function AuthProvider({
     setUser(null);
   };
 
-  const loginState = (
+  const login = (
     token: string,
     userData: User
   ) => {
@@ -104,7 +104,7 @@ export function AuthProvider({
           error
         );
 
-        logoutState();
+        logout();
       } finally {
         setLoading(false);
       }
@@ -118,8 +118,8 @@ export function AuthProvider({
       value={{
         user,
         loading,
-        loginState,
-        logoutState,
+        login,
+        logout,
       }}
     >
       {!loading ? (
