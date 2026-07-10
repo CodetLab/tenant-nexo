@@ -27,3 +27,11 @@ export async function login(
 
   return res.data;
 }
+
+
+
+export const verifyEmail = (token: string) => {
+  return api.post("/auth/verify-email", {
+    token,
+  });
+};

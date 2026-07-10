@@ -27,11 +27,16 @@ import StrategiesPage from "../../pages/Strategies/StrategiesPage";
 
 import LogoutPage from "../../pages/LogoutPage";
 import OrganizationsPage from "../../pages/Organizations/OrganizationPage/OrganizationsPage";
+import VerifyEmailPage from "../../pages/auth/VerifyEmail";
 
 export const router = createBrowserRouter([
   {
     path: "/auth",
     element: <AuthPage />,
+  },
+  {
+    path: "/auth/verify-email",
+    element: <VerifyEmailPage />,
   },
 
   {
