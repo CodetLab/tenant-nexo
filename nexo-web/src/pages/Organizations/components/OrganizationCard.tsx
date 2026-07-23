@@ -30,7 +30,7 @@ export default function OrganizationCard({
                     <p className={styles.slug}>
                         @{organization.slug}
                     </p>
-
+                    <br />
                     <small className={styles.date}>
                         Creada el{" "}
                         {new Date(

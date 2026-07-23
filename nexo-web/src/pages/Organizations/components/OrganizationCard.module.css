@@ -99,3 +99,16 @@
 
     color: #6b7280;
 }
+
+.date {
+    margin-top: 6px;
+
+    font-size: 14px;
+
+    color: #6b7280;
+}
+
+button {
+    border-radius: 5px !important;
+    color: black !important;
+}

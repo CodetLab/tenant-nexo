@@ -26,5 +26,12 @@ export interface RegisterInput {
 export interface AuthResponse {
   token: string;
   user: User;
-  emailVerified: boolean
+  emailVerified: boolean;
+  sessions: {
+    session_id: string;
+    device: string;
+    ip: string;
+    user_id: string;
+    expires_at: string;
+  }[];
 }

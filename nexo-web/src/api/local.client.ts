@@ -1,4 +1,5 @@
 import axios from "axios";
+import { authInterceptor } from "./auth.interceptor";
 
 const localApi = axios.create({
     baseURL: import.meta.env.VITE_API_URL_NEXO,
@@ -10,13 +11,5 @@ const localApi = axios.create({
     },
 });
 
-localApi.interceptors.request.use((config) => {
-    const token = localStorage.getItem("token");
-
-    if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
-    }
-
-    return config;
-});
+localApi.interceptors.request.use(authInterceptor);
 export default localApi;
