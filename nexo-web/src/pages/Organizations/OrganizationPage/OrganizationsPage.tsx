@@ -11,6 +11,7 @@ import EditOrganizationModal from "../components/EditOrganizationModal";
 import InviteMemberModal from "../components/InviteMemberModal";
 import MembersModal from "../components/MembersModal";
 import LeaveOrganizationModal from "../components/LeaveOrganizationModal";
+import { useNavigate } from "react-router-dom";
 
 type Organization = {
     id: string;
@@ -20,6 +21,8 @@ type Organization = {
 };
 
 export default function OrganizationsPage() {
+    const navigate = useNavigate();
+
     const [organizations, setOrganizations] =
         useState<Organization[]>([]);
 
@@ -52,6 +55,12 @@ export default function OrganizationsPage() {
                 await getOrganizations();
 
             setOrganizations(data);
+
+            if (data.length === 0) {
+                navigate("/organizations/create", {
+                    replace: true,
+                });
+            }
         } catch (err) {
             console.error(err);
             setError(
