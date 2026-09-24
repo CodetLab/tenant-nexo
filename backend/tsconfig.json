@@ -16,8 +16,7 @@
     ],
     "allowSyntheticDefaultImports": true,
     "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "incremental": true
+    "noFallthroughCasesInSwitch": true
   },
   "include": [
     "src"
