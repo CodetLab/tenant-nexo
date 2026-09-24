@@ -9,9 +9,7 @@ interface LoginProps {
   onSwitchToRegister: () => void;
 }
 
-export const LoginCard: React.FC<LoginProps> = ({
-  onSwitchToRegister,
-}) => {
+export const LoginCard: React.FC<LoginProps> = ({ onSwitchToRegister }) => {
   const navigate = useNavigate();
   const { login } = useAuth();
 
@@ -26,7 +24,7 @@ export const LoginCard: React.FC<LoginProps> = ({
     const response = await submit({
       email,
       password: pin,
-      appSlug: "nexo",
+      appSlug: "sentinel",
     });
 
     if (!response) return;
@@ -52,23 +50,16 @@ export const LoginCard: React.FC<LoginProps> = ({
     navigate("/organization-check");
   };
 
-  const isFormValid =
-    email.includes("@") && pin.length >= 4;
+  const isFormValid = email.includes("@") && pin.length >= 4;
 
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <img
-          src="logoicon.png"
-          alt="Pathway Logo"
-          className={styles.logo}
-        />
+        <img src="logoicon.png" alt="Pathway Logo" className={styles.logo} />
 
         <h1>Bienvenido</h1>
 
-        <p className={styles.subtitle}>
-          Ingresa a tu cuenta
-        </p>
+        <p className={styles.subtitle}>Ingresa a tu cuenta</p>
       </div>
 
       <form onSubmit={iniciarSesion} className={styles.form}>
@@ -104,10 +95,7 @@ export const LoginCard: React.FC<LoginProps> = ({
       {error && <p className={styles.error}>{error}</p>}
       {success && <p className={styles.success}>{success}</p>}
 
-      <button
-        onClick={onSwitchToRegister}
-        className={styles.linkBtn}
-      >
+      <button onClick={onSwitchToRegister} className={styles.linkBtn}>
         Ir a registro
       </button>
     </div>
