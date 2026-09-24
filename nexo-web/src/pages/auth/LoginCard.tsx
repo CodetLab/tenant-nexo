@@ -24,7 +24,7 @@ export const LoginCard: React.FC<LoginProps> = ({ onSwitchToRegister }) => {
     const response = await submit({
       email,
       password: pin,
-      appSlug: "sentinel",
+      appSlug: "nexo",
     });
 
     if (!response) return;
