@@ -1,81 +1,115 @@
 import React, { useState } from "react";
 import styles from "./Auth.module.css";
 import { useRegister } from "../../hooks/useRegister";
-
 interface RegisterProps {
   onSwitchToLogin: () => void;
 }
-
 export const RegisterCard: React.FC<RegisterProps> = ({ onSwitchToLogin }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [pin, setPin] = useState("");
-  const [confirmPin, setConfirmPin] = useState("");
-
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const { submit, loading, error, success } = useRegister();
-
   const registrarUsuario = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (pin !== confirmPin) return;
-
+    if (password !== confirmPassword) {
+      return;
+    }
     await submit({
-      name,
-      email,
-      password: pin,
+      name: name.trim(),
+      email: email.trim(),
+      password,
       appSlug: "nexo",
     });
   };
-
+  const passwordsMatch = password === confirmPassword;
   const isFormValid =
-    name.length >= 3 &&
+    name.trim().length >= 3 &&
     email.includes("@") &&
-    pin.length >= 4 &&
-    confirmPin.length >= 4;
-
+    password.length >= 4 &&
+    confirmPassword.length >= 4 &&
+    passwordsMatch;
   return (
     <div className={styles.container}>
+      {" "}
       <div className={styles.header}>
-        <img src="logoicon.png" alt="Logo" className={styles.logo} />
-        <h1>Crear Cuenta</h1>
-      </div>
-
+        {" "}
+        <img src="logoicon.png" alt="Logo" className={styles.logo} />{" "}
+        <h1>Crear Cuenta</h1>{" "}
+        <p className={styles.subtitle}> Registrate para comenzar </p>{" "}
+      </div>{" "}
       <form onSubmit={registrarUsuario} className={styles.form}>
-        <input
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Nombre"
-        />
-
-        <input
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
-        />
-
-        <input
-          type="password"
-          value={pin}
-          onChange={(e) => setPin(e.target.value)}
-          placeholder="PIN"
-        />
-
-        <input
-          type="password"
-          value={confirmPin}
-          onChange={(e) => setConfirmPin(e.target.value)}
-          placeholder="Confirm PIN"
-        />
-
-        <button disabled={!isFormValid || loading}>
-          {loading ? "Registrando..." : "Crear Cuenta"}
-        </button>
-      </form>
-
-      {error && <p>{error}</p>}
-      {success && <p>{success}</p>}
-
-      <button onClick={onSwitchToLogin}>Ir a login</button>
+        {" "}
+        <div className={styles.formGroup}>
+          {" "}
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Nombre"
+            className={styles.formInput}
+            autoComplete="name"
+            required
+          />{" "}
+        </div>{" "}
+        <div className={styles.formGroup}>
+          {" "}
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Correo electrónico"
+            className={styles.formInput}
+            autoComplete="email"
+            required
+          />{" "}
+        </div>{" "}
+        <div className={styles.formGroup}>
+          {" "}
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Contraseña"
+            className={styles.formInput}
+            autoComplete="new-password"
+            required
+          />{" "}
+        </div>{" "}
+        <div className={styles.formGroup}>
+          {" "}
+          <input
+            type="password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            placeholder="Confirmar contraseña"
+            className={styles.formInput}
+            autoComplete="new-password"
+            required
+          />{" "}
+        </div>{" "}
+        {confirmPassword.length > 0 && !passwordsMatch && (
+          <p className={styles.error}> Las contraseñas no coinciden. </p>
+        )}{" "}
+        <button
+          type="submit"
+          disabled={!isFormValid || loading}
+          className={styles.btn}
+        >
+          {" "}
+          {loading ? "Registrando..." : "Crear Cuenta"}{" "}
+        </button>{" "}
+      </form>{" "}
+      {error && <p className={styles.error}> {error} </p>}{" "}
+      {success && <p className={styles.success}> {success} </p>}{" "}
+      <button
+        type="button"
+        onClick={onSwitchToLogin}
+        className={styles.linkBtn}
+      >
+        {" "}
+        Ir a login{" "}
+      </button>{" "}
     </div>
   );
 };

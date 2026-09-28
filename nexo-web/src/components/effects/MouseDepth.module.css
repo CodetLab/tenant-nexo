@@ -1,0 +1,155 @@
+.container {
+  --mouse-x: 50%;
+  --mouse-y: 50%;
+  --grid-x: 0px;
+  --grid-y: 0px;
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
+
+  position: relative;
+  overflow: hidden;
+
+  perspective: 1400px;
+}
+
+
+/* =========================
+   BASE GRID
+========================= */
+
+.container::before {
+  content: "";
+
+  position: absolute;
+  inset: -80px;
+
+  background-image:
+    linear-gradient(
+      rgba(15, 23, 42, 0.04) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(15, 23, 42, 0.04) 1px,
+      transparent 1px
+    );
+
+  background-size: 32px 32px;
+
+  transform:
+    translate3d(
+      var(--grid-x),
+      var(--grid-y),
+      0
+    )
+    rotateX(var(--tilt-x))
+    rotateY(var(--tilt-y))
+    scale(1.06);
+
+  transform-origin: center;
+
+  pointer-events: none;
+
+  transition:
+    transform 0.18s ease-out;
+}
+
+
+/* =========================
+   LOCAL DEPTH GRID
+========================= */
+
+.container::after {
+  content: "";
+
+  position: absolute;
+  inset: -80px;
+
+  background-image:
+    linear-gradient(
+      rgba(79, 70, 229, 0.13) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(79, 70, 229, 0.13) 1px,
+      transparent 1px
+    );
+
+  background-size: 32px 32px;
+
+  transform:
+    translate3d(
+      calc(var(--grid-x) * 0.55),
+      calc(var(--grid-y) * 0.55),
+      0
+    )
+    translateZ(18px)
+    scale(1.03);
+
+  pointer-events: none;
+
+  mask-image:
+    radial-gradient(
+      circle 240px at var(--mouse-x) var(--mouse-y),
+      rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 0, 0.92) 28%,
+      rgba(0, 0, 0, 0.55) 50%,
+      rgba(0, 0, 0, 0.15) 72%,
+      transparent 100%
+    );
+
+  -webkit-mask-image:
+    radial-gradient(
+      circle 240px at var(--mouse-x) var(--mouse-y),
+      rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 0, 0.92) 28%,
+      rgba(0, 0, 0, 0.55) 50%,
+      rgba(0, 0, 0, 0.15) 72%,
+      transparent 100%
+    );
+
+  filter:
+    drop-shadow(
+      0 12px 24px rgba(79, 70, 229, 0.08)
+    );
+
+  transition:
+    transform 0.18s ease-out;
+}
+
+
+/* =========================
+   LOCAL LIGHT / CONTOUR
+========================= */
+
+.container {
+  background:
+    radial-gradient(
+      circle 260px at var(--mouse-x) var(--mouse-y),
+      rgba(99, 102, 241, 0.045),
+      transparent 70%
+    );
+}
+
+
+/* =========================
+   CONTENT
+========================= */
+
+.container > * {
+  position: relative;
+  z-index: 1;
+}
+
+
+/* =========================
+   ACCESSIBILITY
+========================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .container::before,
+  .container::after {
+    transition: none;
+  }
+}

@@ -1,81 +1,129 @@
 /* =========================
-   AUTH MODULE - MODERN UI
+   AUTH MODULE
+   Code't Lab / Nexo
 ========================= */
 
 .page {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   min-height: 100vh;
   width: 100%;
+
   display: flex;
   justify-content: center;
   align-items: center;
+
   padding: 2rem;
-  font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  box-sizing: border-box;
+
+  background:
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(99, 102, 241, 0.045),
+      transparent 38%
+    ),
+    linear-gradient(
+      135deg,
+      #f8fafc 0%,
+      #f7f8fc 55%,
+      #f4f6fb 100%
+    );
+
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
   position: relative;
   overflow: hidden;
 }
 
-/* Background floating circles */
-.page::before {
-  content: "";
-  position: absolute;
-  width: 420px;
-  height: 420px;
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 50%;
-  top: -120px;
-  right: -120px;
-  animation: float 7s ease-in-out infinite;
-}
 
-.page::after {
-  content: "";
-  position: absolute;
-  width: 320px;
-  height: 320px;
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 50%;
-  bottom: -100px;
-  left: -100px;
-  animation: float 9s ease-in-out infinite reverse;
-}
+/* =========================
+   AUTH CARD
+========================= */
 
-/* Floating animation */
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-
-  50% {
-    transform: translateY(-20px);
-  }
-}
-
-/* Main container */
 .container {
-  background: #ffffff;
   width: 100%;
-  max-width: 450px;
-  padding: 3rem 2.5rem;
-  border-radius: 24px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  max-width: 420px;
+
+  padding: 2.6rem 2.5rem 2.4rem;
+
+  background: rgba(255, 255, 255, 0.94);
+
+  border: 1px solid rgba(226, 232, 240, 0.95);
+  border-radius: 20px;
+
+  box-shadow:
+    0 24px 60px rgba(15, 23, 42, 0.08),
+    0 8px 20px rgba(15, 23, 42, 0.04);
+
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
   position: relative;
   z-index: 1;
-  animation: slideUp 0.5s ease-out;
+
+  animation: fadeIn 0.35s ease-out;
 }
 
-/* Entrance animation */
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
 
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* =========================
+   TOP BRAND
+========================= */
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  margin-bottom: 2rem;
 }
+
+.logo {
+  width: 52px;
+  height: 52px;
+
+  object-fit: contain;
+
+  margin-bottom: 1rem;
+
+  filter:
+    drop-shadow(
+      0 6px 12px rgba(79, 70, 229, 0.14)
+    );
+}
+
+.brandName {
+  margin: 0;
+
+  color: #475569;
+
+  font-size: 0.7rem;
+  font-weight: 700;
+
+  line-height: 1;
+  letter-spacing: 0.16em;
+
+  text-transform: uppercase;
+}
+
+.productName {
+  margin: 0.35rem 0 0;
+
+  color: #0f172a;
+
+  font-size: 1.35rem;
+  font-weight: 700;
+
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+}
+
+.productNameAccent {
+  color: #4f46e5;
+}
+
 
 /* =========================
    HEADER
@@ -83,41 +131,30 @@
 
 .header {
   text-align: center;
-  margin-bottom: 2.5rem;
-}
-
-.logo {
-  width: 80px;
-  height: 80px;
-  margin-bottom: 1.5rem;
-  object-fit: contain;
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
-  animation: pulse 2s ease-in-out infinite;
-}
-
-/* Logo pulse */
-@keyframes pulse {
-  0%, 100% {
-    transform: scale(1);
-  }
-
-  50% {
-    transform: scale(1.05);
-  }
+  margin-bottom: 2rem;
 }
 
 .header h1 {
-  font-size: 2rem;
-  font-weight: 700;
-  color: #1a202c;
   margin: 0 0 0.5rem;
+
+  color: #0f172a;
+
+  font-size: 1.8rem;
+  font-weight: 700;
+
+  line-height: 1.2;
+  letter-spacing: -0.025em;
 }
 
 .subtitle {
-  color: #718096;
-  font-size: 1rem;
   margin: 0;
+
+  color: #64748b;
+
+  font-size: 0.95rem;
+  line-height: 1.5;
 }
+
 
 /* =========================
    FORM
@@ -126,7 +163,8 @@
 .form {
   display: flex;
   flex-direction: column;
-  gap: 1.4rem;
+
+  gap: 1rem;
 }
 
 .formGroup {
@@ -135,136 +173,278 @@
 }
 
 .formGroup label {
-  font-size: 0.9375rem;
+  margin-bottom: 0.45rem;
+
+  color: #334155;
+
+  font-size: 0.875rem;
   font-weight: 600;
-  color: #2d3748;
-  margin-bottom: 0.5rem;
 }
+
+
+/* =========================
+   INPUTS
+========================= */
 
 .formInput {
   width: 100%;
-  padding: 0.9rem 1rem;
-  border: 2px solid #e2e8f0;
-  border-radius: 12px;
-  font-size: 1rem;
-  color: #2d3748;
-  transition: all 0.3s ease;
+  min-height: 48px;
+
+  padding: 0.75rem 0.9rem;
+
   box-sizing: border-box;
+
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+
+  background: rgba(255, 255, 255, 0.96);
+
+  color: #0f172a;
+
   font-family: inherit;
+  font-size: 0.95rem;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
 }
 
 .formInput::placeholder {
-  color: #a0aec0;
+  color: #94a3b8;
+}
+
+.formInput:hover {
+  border-color: #94a3b8;
 }
 
 .formInput:focus {
   outline: none;
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+
+  border-color: #6366f1;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 0 0 3px rgba(99, 102, 241, 0.11);
 }
 
-/* Input hint */
-.inputHint {
-  display: block;
-  margin-top: 0.4rem;
-  font-size: 0.8125rem;
-  color: #a0aec0;
-  font-style: italic;
+.formInput:disabled {
+  background: #f8fafc;
+  cursor: not-allowed;
 }
+
 
 /* =========================
-   BUTTONS
+   INPUT HINT
+========================= */
+
+.inputHint {
+  display: block;
+
+  margin-top: 0.4rem;
+
+  color: #94a3b8;
+
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+
+
+/* =========================
+   BUTTON
 ========================= */
 
 .btn {
   width: 100%;
-  padding: 1rem;
-  border: none;
-  border-radius: 12px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  font-size: 1.05rem;
+  min-height: 48px;
+
+  margin-top: 0.35rem;
+
+  padding: 0.8rem 1rem;
+
+  border: 1px solid #4f46e5;
+  border-radius: 10px;
+
+  background: #4f46e5;
+
+  color: #ffffff;
+
+  font-family: inherit;
+  font-size: 0.95rem;
   font-weight: 600;
+
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+
+  box-shadow:
+    0 5px 14px rgba(79, 70, 229, 0.2);
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.15s ease,
+    box-shadow 0.2s ease;
 }
 
 .btn:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+  background: #4338ca;
+  border-color: #4338ca;
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 8px 18px rgba(79, 70, 229, 0.23);
 }
 
 .btn:active:not(:disabled) {
   transform: translateY(0);
+
+  box-shadow:
+    0 3px 8px rgba(79, 70, 229, 0.18);
+}
+
+.btn:focus-visible {
+  outline: none;
+
+  box-shadow:
+    0 0 0 3px rgba(99, 102, 241, 0.14),
+    0 5px 14px rgba(79, 70, 229, 0.2);
 }
 
 .btn:disabled {
-  opacity: 0.6;
+  background: #cbd5e1;
+  border-color: #cbd5e1;
+
+  box-shadow: none;
+
   cursor: not-allowed;
+  transform: none;
 }
+
 
 /* =========================
    LINKS
 ========================= */
 
 .forgotPasswordLink {
-  text-align: right;
-  margin-top: -0.5rem;
+  display: flex;
+  justify-content: flex-end;
+
+  margin-top: -0.15rem;
 }
 
 .linkBtn {
-  background: none;
+  padding: 0;
+
   border: none;
-  color: #667eea;
-  cursor: pointer;
+  background: transparent;
+
+  color: #4f46e5;
+
+  font-family: inherit;
   font-size: 0.875rem;
   font-weight: 500;
-  transition: color 0.2s ease;
-  text-decoration: none;
+
+  cursor: pointer;
+
+  transition:
+    color 0.2s ease;
 }
 
 .linkBtn:hover {
-  color: #764ba2;
+  color: #3730a3;
   text-decoration: underline;
 }
 
+.linkBtn:focus-visible {
+  outline: 2px solid rgba(99, 102, 241, 0.3);
+  outline-offset: 3px;
+
+  border-radius: 4px;
+}
+
+
 /* =========================
-   TOGGLE SECTION
+   TOGGLE
 ========================= */
 
 .sectionToggle {
-  text-align: center;
-  margin-top: 2rem;
+  margin-top: 1.75rem;
   padding-top: 1.5rem;
+
+  text-align: center;
+
   border-top: 1px solid #e2e8f0;
 }
 
 .toggleText {
-  color: #718096;
-  font-size: 0.9375rem;
-  margin-bottom: 1rem;
+  margin: 0 0 0.75rem;
+
+  color: #64748b;
+
+  font-size: 0.875rem;
+  line-height: 1.5;
 }
+
 
 /* =========================
    ALERTS
 ========================= */
 
 .alert {
-  padding: 1rem;
-  border-radius: 12px;
   display: flex;
   align-items: center;
+
   gap: 0.75rem;
-  font-size: 0.9375rem;
-  animation: slideDown 0.3s ease-out;
+
+  margin-top: 1rem;
+  padding: 0.85rem 1rem;
+
+  border-radius: 10px;
+
+  font-size: 0.875rem;
+  line-height: 1.4;
+
+  animation: alertIn 0.2s ease-out;
 }
 
-/* Alert animation */
-@keyframes slideDown {
+.error {
+  color: #b91c1c;
+
+  background: #fef2f2;
+
+  border: 1px solid #fecaca;
+}
+
+.success {
+  color: #15803d;
+
+  background: #f0fdf4;
+
+  border: 1px solid #bbf7d0;
+}
+
+
+/* =========================
+   ANIMATIONS
+========================= */
+
+@keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(-10px);
+    transform: translateY(12px) scale(0.99);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes alertIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
   }
 
   to {
@@ -273,37 +453,52 @@
   }
 }
 
-.error {
-  background: #fff5f5;
-  border: 2px solid #fc8181;
-  color: #c53030;
-}
-
-.success {
-  background: #f0fff4;
-  border: 2px solid #68d391;
-  color: #2f855a;
-}
 
 /* =========================
    RESPONSIVE
 ========================= */
 
 @media (max-width: 480px) {
+  .page {
+    padding: 1rem;
+  }
+
   .container {
-    padding: 2rem 1.5rem;
+    max-width: 100%;
+
+    padding: 2rem 1.25rem;
+
+    border-radius: 16px;
+  }
+
+  .header {
+    margin-bottom: 1.75rem;
   }
 
   .header h1 {
-    font-size: 1.75rem;
+    font-size: 1.6rem;
   }
 
   .logo {
-    width: 60px;
-    height: 60px;
+    width: 48px;
+    height: 48px;
+  }
+}
+
+
+/* =========================
+   REDUCED MOTION
+========================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .container,
+  .alert {
+    animation: none;
   }
 
-  .page {
-    padding: 1rem;
+  .btn,
+  .formInput,
+  .linkBtn {
+    transition: none;
   }
 }

@@ -7,7 +7,7 @@ export async function createOrganization(
 ) {
     const { data: organization, error } =
         await supabase
-            .from("organizations")
+            .from("nexo_organizations")
             .insert({
                 name,
                 slug,
@@ -22,7 +22,7 @@ export async function createOrganization(
 
     const { error: memberError } =
         await supabase
-            .from("organization_members")
+            .from("nexo_organization_members")
             .insert({
                 organization_id: organization.id,
                 profile_id: profileId,
@@ -41,7 +41,7 @@ export async function findMyOrganization(
 ) {
     const { data: membership, error } =
         await supabase
-            .from("organization_members")
+            .from("nexo_organization_members")
             .select("organization_id")
             .eq("profile_id", profileId)
             .single();
@@ -52,7 +52,7 @@ export async function findMyOrganization(
 
     const { data: organization, error: orgError } =
         await supabase
-            .from("organizations")
+            .from("nexo_organizations")
             .select("*")
             .eq(
                 "id",
@@ -71,14 +71,14 @@ export async function listOrganizations(
     profileId: number
 ) {
     const { data, error } = await supabase
-        .from("organizations")
+        .from("nexo_organizations")
         .select(`
       *,
-      organization_members!inner (
+      nexo_organization_members!inner (
         profile_id
       )
     `)
-        .eq("organization_members.profile_id", profileId)
+        .eq("nexo_organization_members.profile_id", profileId)
         .order("created_at", {
             ascending: false,
         });
@@ -96,7 +96,7 @@ export async function updateOrganization(
     slug: string
 ) {
     const { data, error } = await supabase
-        .from("organizations")
+        .from("nexo_organizations")
         .update({
             name,
             slug,
@@ -114,7 +114,7 @@ export async function getMembers(
     organizationId: string
 ) {
     const { data, error } = await supabase
-        .from("organization_members")
+        .from("nexo_organization_members")
         .select(`
       role,
       created_at,
@@ -135,7 +135,7 @@ export async function findMemberRole(
     profileId: number
 ) {
     const { data, error } = await supabase
-        .from("organization_members")
+        .from("nexo_organization_members")
         .select("role")
         .eq("organization_id", organizationId)
         .eq("profile_id", profileId)
@@ -151,7 +151,7 @@ export async function addMember(
     role: string
 ) {
     const { data, error } = await supabase
-        .from("organization_members")
+        .from("nexo_organization_members")
         .insert({
             organization_id: organizationId,
             profile_id: profileId,
@@ -170,7 +170,7 @@ export async function removeMember(
     profileId: number
 ) {
     const { error } = await supabase
-        .from("organization_members")
+        .from("nexo_organization_members")
         .delete()
         .eq("organization_id", organizationId)
         .eq("profile_id", profileId);
@@ -183,7 +183,7 @@ export async function leaveOrganization(
     profileId: number
 ) {
     const { error } = await supabase
-        .from("organization_members")
+        .from("nexo_organization_members")
         .delete()
         .eq("organization_id", organizationId)
         .eq("profile_id", profileId);

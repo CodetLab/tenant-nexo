@@ -1,20 +1,24 @@
-import React, { useState } from 'react';
-import { LoginCard } from './LoginCard';
-import { RegisterCard } from './RegisterCard';
-import styles from './Auth.module.css';
+import React, { useState } from "react";
+import { LoginCard } from "./LoginCard";
+import { RegisterCard } from "./RegisterCard";
+import { MouseDepth } from "../../components/effects/MouseDepth";
+import styles from "./Auth.module.css";
 
 export const AuthPage: React.FC = () => {
-  // 'login' o 'register' determinan qué componente renderizar
-  const [view, setView] = useState<'login' | 'register'>('login');
+  const [view, setView] = useState<"login" | "register">("login");
 
   return (
-    <div className={styles.page}>
-      {view === 'login' ? (
-        <LoginCard onSwitchToRegister={() => setView('register')} />
+    <MouseDepth className={styles.page}>
+      {view === "login" ? (
+        <LoginCard
+          onSwitchToRegister={() => setView("register")}
+        />
       ) : (
-        <RegisterCard onSwitchToLogin={() => setView('login')} />
+        <RegisterCard
+          onSwitchToLogin={() => setView("login")}
+        />
       )}
-    </div>
+    </MouseDepth>
   );
 };
 
