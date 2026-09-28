@@ -14,14 +14,10 @@ export const AuthHeader: React.FC<AuthHeaderProps> = ({
     <>
       <div className={styles.brand}>
         <img
-          src="/logoicon.png"
+          src="logo2sinfondo.svg"
           alt="Code't Lab"
           className={styles.logo}
         />
-
-        <p className={styles.brandName}>
-          Code't Lab
-        </p>
 
         <p className={styles.productName}>
           Nexo

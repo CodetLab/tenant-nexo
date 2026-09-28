@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styles from "./Auth.module.css";
 import { useRegister } from "../../hooks/useRegister";
+import { AuthHeader } from "./AuthHeader";
 interface RegisterProps {
   onSwitchToLogin: () => void;
 }
@@ -32,12 +33,10 @@ export const RegisterCard: React.FC<RegisterProps> = ({ onSwitchToLogin }) => {
   return (
     <div className={styles.container}>
       {" "}
-      <div className={styles.header}>
-        {" "}
-        <img src="logoicon.png" alt="Logo" className={styles.logo} />{" "}
-        <h1>Crear Cuenta</h1>{" "}
-        <p className={styles.subtitle}> Registrate para comenzar </p>{" "}
-      </div>{" "}
+      <AuthHeader
+        title="Bienvenido"
+        subtitle="Crea tu cuenta"
+      />
       <form onSubmit={registrarUsuario} className={styles.form}>
         {" "}
         <div className={styles.formGroup}>
