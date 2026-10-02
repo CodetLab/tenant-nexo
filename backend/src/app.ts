@@ -12,7 +12,10 @@ app.use(cors());
 app.use(helmet());
 app.use(morgan("dev"));
 app.use(express.json());
-
+app.use((req, res, next) => {
+    console.log(`[REQ] ${req.method} ${req.originalUrl}`);
+    next();
+});
 app.use("/api", routes);
 
 app.use(errorMiddleware);

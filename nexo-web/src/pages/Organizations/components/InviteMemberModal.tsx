@@ -3,13 +3,12 @@ import { useState } from "react";
 import Modal from "./Modal/OrganizationModal";
 
 import {
-    inviteMember,
-} from "../../../services/organization.service";
+    invitationService,
+} from "../../../services/invitation.service";
 
 type Props = {
     open: boolean;
     organizationId: string;
-
     onClose: () => void;
 };
 
@@ -32,16 +31,23 @@ export default function InviteMemberModal({
     ) {
         e.preventDefault();
 
+        const normalizedEmail =
+            email.trim();
+
+        if (!normalizedEmail) {
+            return;
+        }
+
         try {
             setLoading(true);
 
-            await inviteMember(
-                organizationId,
-                {
-                    email: email,
-                    role: role,
-                }
-            );
+            await invitationService.create({
+                resourceType: "organization",
+                resourceId: organizationId,
+                resourceAction: "join",
+                email: normalizedEmail,
+                role,
+            });
 
             setEmail("");
             setRole("member");
@@ -58,18 +64,16 @@ export default function InviteMemberModal({
             title="Invitar miembro"
             onClose={onClose}
         >
-            <form
-                onSubmit={submit}
-            >
+            <form onSubmit={submit}>
                 <input
                     type="email"
                     placeholder="correo@empresa.com"
                     value={email}
                     onChange={(e) =>
-                        setEmail(
-                            e.target.value
-                        )
+                        setEmail(e.target.value)
                     }
+                    required
+                    disabled={loading}
                 />
 
                 <select
@@ -77,15 +81,27 @@ export default function InviteMemberModal({
                     onChange={(e) =>
                         setRole(e.target.value)
                     }
+                    disabled={loading}
                 >
-                    <option value="member">Member</option>
-                    <option value="admin">Admin</option>
+                    <option value="member">
+                        Member
+                    </option>
+
+                    <option value="admin">
+                        Admin
+                    </option>
                 </select>
 
                 <button
-                    disabled={loading}
+                    type="submit"
+                    disabled={
+                        loading ||
+                        !email.trim()
+                    }
                 >
-                    Enviar invitación
+                    {loading
+                        ? "Enviando..."
+                        : "Enviar invitación"}
                 </button>
             </form>
         </Modal>

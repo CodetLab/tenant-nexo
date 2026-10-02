@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom";
 
 import Sidebar from "../../components/layout/Sidebar";
 import Topbar from "../../components/layout/Topbar";
+import DepthField from "../../components/effects/deepField/DepthField";
 
 import styles from "./MainLayout.module.css";
 
@@ -14,7 +15,9 @@ export default function MainLayout() {
         <Topbar />
 
         <main className={styles.main}>
-          <Outlet />
+          <DepthField>
+            <Outlet />
+          </DepthField>
         </main>
       </div>
     </div>

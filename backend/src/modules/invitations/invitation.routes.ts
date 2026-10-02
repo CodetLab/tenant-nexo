@@ -2,46 +2,46 @@ import { Router } from "express";
 
 import * as controller from "./invitation.controller";
 
-import { authMiddleware } from "../../middlewares/auth.middleware";
-
 const router = Router();
 
-router.use(authMiddleware);
-
-router.post("/", controller.create);
-
-router.get("/", controller.listByResource);
-
-router.get("/me", controller.myPending);
+router.post(
+    "/invitations",
+    controller.create
+);
 
 router.get(
-    "/token/:token",
-    controller.findByToken
+    "/invitations",
+    controller.listByResource
+);
+
+router.get(
+    "/invitations/mine",
+    controller.listMine
+);
+
+router.get(
+    "/invitations/token/:token",
+    controller.getByToken
+);
+
+router.get(
+    "/invitations/token/:token/validate",
+    controller.validate
 );
 
 router.post(
-    "/token/:token/accept",
+    "/invitations/:id/accept",
     controller.accept
 );
 
 router.post(
-    "/token/:token/decline",
+    "/invitations/:id/decline",
     controller.decline
 );
 
 router.post(
-    "/:id/revoke",
+    "/invitations/:id/revoke",
     controller.revoke
 );
 
-router.post(
-    "/:id/expire",
-    controller.expire
-);
-
-
-router.get(
-    "/all",
-    controller.list
-);
 export default router;

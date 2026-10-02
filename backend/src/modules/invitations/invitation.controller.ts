@@ -1,4 +1,7 @@
-import { Request, Response } from "express";
+import {
+    Request,
+    Response,
+} from "express";
 
 import * as service from "./invitation.service";
 
@@ -10,54 +13,122 @@ type IdParams = {
     id: string;
 };
 
+function getAuthHeader(
+    req: Request
+) {
+    const authorization =
+        req.headers.authorization;
+
+    if (!authorization) {
+        throw new Error(
+            "Missing Authorization header"
+        );
+    }
+
+    return authorization;
+}
+
 export async function create(
     req: Request,
     res: Response
 ) {
-    const invitation =
+    const result =
         await service.create(
-            req.body.resourceId,
-            req.body.resourceType,
-            req.body.email,
-            req.body.role,
-            req.context!.profileId!
+            {
+                resourceType:
+                    req.body.resourceType,
+
+                resourceId:
+                    req.body.resourceId,
+
+                resourceAction:
+                    req.body.resourceAction,
+
+                email:
+                    req.body.email,
+
+                role:
+                    req.body.role,
+            },
+            getAuthHeader(req)
         );
 
-    res.status(201).json(invitation);
+    res.status(201).json(result);
 }
 
-export async function findByToken(
+export async function listByResource(
+    req: Request,
+    res: Response
+) {
+    const invitations =
+        await service.listByResource(
+            req.query.resourceType as string,
+            req.query.resourceId as string,
+            getAuthHeader(req)
+        );
+
+    res.json(invitations);
+}
+
+export async function listMine(
+    req: Request,
+    res: Response
+) {
+    const invitations =
+        await service.listMine(
+            getAuthHeader(req)
+        );
+
+    res.json(invitations);
+}
+
+export async function getByToken(
     req: Request<TokenParams>,
     res: Response
 ) {
     const invitation =
-        await service.findByToken(
-            req.params.token
+        await service.getByToken(
+            req.params.token,
+            getAuthHeader(req)
+        );
+
+    res.json(invitation);
+}
+
+export async function validate(
+    req: Request<TokenParams>,
+    res: Response
+) {
+    const invitation =
+        await service.validate(
+            req.params.token,
+            getAuthHeader(req)
         );
 
     res.json(invitation);
 }
 
 export async function accept(
-    req: Request<TokenParams>,
+    req: Request<IdParams>,
     res: Response
 ) {
     const invitation =
         await service.accept(
-            req.params.token,
-            req.context!.profileId!
+            req.params.id,
+            getAuthHeader(req)
         );
 
     res.json(invitation);
 }
 
 export async function decline(
-    req: Request<TokenParams>,
+    req: Request<IdParams>,
     res: Response
 ) {
     const invitation =
         await service.decline(
-            req.params.token
+            req.params.id,
+            getAuthHeader(req)
         );
 
     res.json(invitation);
@@ -69,58 +140,9 @@ export async function revoke(
 ) {
     const invitation =
         await service.revoke(
-            req.params.id
+            req.params.id,
+            getAuthHeader(req)
         );
 
     res.json(invitation);
-}
-
-export async function expire(
-    req: Request<IdParams>,
-    res: Response
-) {
-    const invitation =
-        await service.expire(
-            req.params.id
-        );
-
-    res.json(invitation);
-}
-
-export async function listByResource(
-    req: Request,
-    res: Response
-) {
-    const invitations =
-        await service.listByResource(
-            req.query.resourceType as string,
-            req.query.resourceId as string
-        );
-
-    res.json(invitations);
-}
-
-export async function myPending(
-    req: Request,
-    res: Response
-) {
-    const invitations =
-        await service.listPendingByEmail(
-            req.context!.email!
-        );
-
-    res.json(invitations);
-}
-
-export async function list(
-    req: Request,
-    res: Response
-) {
-    const invitations =
-        await service.list(
-            req.query.resourceType as string,
-            req.query.resourceId as string
-        );
-
-    res.json(invitations);
 }

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { LoginCard } from "./LoginCard";
 import { RegisterCard } from "./RegisterCard";
-import { MouseDepth } from "../../components/effects/MouseDepth";
+import { MouseDepth } from "../../components/effects/mouseDepth/MouseDepth";
 import styles from "./Auth.module.css";
 
 export const AuthPage: React.FC = () => {

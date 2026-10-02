@@ -1,33 +1,37 @@
 import { supabase } from "../../db/supabase";
 
 export async function upsertProfile(
-  tenantUserId: number,
-  name: string,
-  email: string,
+    tenantUserId: number,
+    name: string,
+    email: string,
 ) {
-  const { data: existing } = await supabase
-    .from("nexo_profiles")
-    .select("*")
-    .eq("tenant_user_id", tenantUserId)
-    .maybeSingle();
+    const { data: existing, error: findError } = await supabase
+        .from("nexo_profiles")
+        .select("*")
+        .eq("tenant_user_id", tenantUserId)
+        .maybeSingle();
 
-  if (existing) {
-    return existing;
-  }
+    if (findError) {
+        throw findError;
+    }
 
-  const { data, error } = await supabase
-    .from("nexo_profiles")
-    .insert({
-      tenant_user_id: tenantUserId,
-      name,
-      email,
-    })
-    .select()
-    .single();
+    if (existing) {
+        return existing;
+    }
 
-  if (error) {
-    throw error;
-  }
+    const { data, error } = await supabase
+        .from("nexo_profiles")
+        .insert({
+            tenant_user_id: tenantUserId,
+            name,
+            email,
+        })
+        .select()
+        .single();
 
-  return data;
+    if (error) {
+        throw error;
+    }
+
+    return data;
 }

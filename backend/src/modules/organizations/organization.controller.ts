@@ -1,82 +1,28 @@
 import { Request, Response } from "express";
-
 import * as service from "./organization.service";
 
-type Params = {
-  id: string;
-};
-
-export async function create(
-  req: Request,
-  res: Response
-) {
-  const organization = await service.create(
-    req.body.name,
-    req.body.slug,
-    req.context!.profileId!
-  );
-
-  res.status(201).json(organization);
-}
-
 export async function list(
-  req: Request,
-  res: Response
+    req: Request,
+    res: Response
 ) {
-  const organizations = await service.list(
-    req.context!.profileId!
-  );
+    try {
+        const tenantUserId = req.context?.userId;
 
-  res.json(organizations);
+        if (!tenantUserId) {
+            return res.status(401).json({
+                error: "Unauthorized",
+            });
+        }
+
+        const organizations =
+            await service.list(tenantUserId);
+
+        return res.json(organizations);
+    } catch (error) {
+        console.error("[ORGANIZATIONS]", error);
+
+        return res.status(500).json({
+            error: "Failed to fetch organizations",
+        });
+    }
 }
-export async function update(
-  req: Request<Params>,
-  res: Response
-) {
-  const organization =
-    await service.update(
-      req.params.id,
-      req.body.name,
-      req.body.slug
-    );
-
-  res.json(organization);
-}
-
-export async function members(
-  req: Request<Params>,
-  res: Response
-) {
-  const members =
-    await service.members(
-      req.params.id
-    );
-
-  res.json(members);
-}
-
-export async function invite(
-  req: Request<Params>,
-  res: Response
-) {
-  const invitation =
-    await service.invite(
-      req.params.id,
-      req.body.email,
-      req.body.role,
-      req.context!.profileId!
-    );
-
-  res.status(201).json(invitation);
-}
-
-export const leave = async (req: Request, res: Response) => {
-  await service.leaveO(
-    String(req.params.id),
-    req.context!.profileId!
-  );
-
-  res.json({
-    success: true,
-  });
-};

@@ -1,247 +1,145 @@
-import crypto from "node:crypto";
+import axios from "axios";
 
-import * as repository from "./invitation.repository";
-import {
-    InvitationNotFoundError,
-    InvitationAlreadyExistsError,
-    InvitationExpiredError,
-    InvitationNotPendingError,
-    UserAlreadyAMemberError,
-} from "./invitation.errors";
-import * as mailService from "./mailer.service";
-import * as templateService from "./invitation.template";
-import * as organizationRepository from "../organizations/organization.repository";
-export async function create(
-    resourceId: string,
-    resourceType: string,
-    email: string,
-    role: string,
-    invitedBy: number
-) {
-    if (resourceType === "organization") {
-        const inviterRole =
-            await organizationRepository.findMemberRole(
-                resourceId,
-                invitedBy
-            );
+import type {
+    Invitation,
+    CreateInvitationInput,
+} from "./invitation.types";
 
-        if (
-            inviterRole !== "owner" &&
-            inviterRole !== "admin"
-        ) {
-            throw new Error(
-                "Only owners and admins can invite members."
-            );
-        }
-    }
+const CODET_API_URL =
+    "http://localhost:5000";
 
-    const existing =
-        await repository.findPending(
-            email,
-            resourceType,
-            resourceId
-        );
+const NEXO_APP_ID =
+    Number(process.env.CODET_APP_ID);
 
-    if (existing.length > 0) {
-        throw new InvitationAlreadyExistsError();
-    }
-
-    if (resourceType === "organization") {
-        const profile =
-            await repository.findProfileByEmail(
-                email
-            );
-
-        if (!profile) {
-            throw new Error(
-                "Profile not found"
-            );
-        }
-
-        const isMember =
-            await repository.isMember(
-                resourceId,
-                profile.id
-            );
-
-        if (isMember) {
-            throw new UserAlreadyAMemberError();
-        }
-    }
-
-    const token = crypto.randomUUID();
-
-    const invitation =
-        await repository.create({
-            resourceId,
-            resourceType,
-            email,
-            role,
-            invitedBy,
-            token,
-        });
-
-    await mailService.sendInvitationMail({
-        to: email,
-        subject: "Invitation to join",
-        body: templateService.buildInvitationTemplate({
-            inviterName: "",
-            resourceName: "",
-            resourceType,
-            acceptUrl: `http://localhost:4000/invitation/token/${token}`,
-        }),
+function api(authHeader: string) {
+    return axios.create({
+        baseURL: CODET_API_URL,
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: authHeader,
+        },
     });
-
-    return invitation;
 }
 
-export async function findByToken(
-    token: string
+export async function create(
+    input: CreateInvitationInput,
+    authHeader: string
 ) {
-    const invitation =
-        await repository.findByToken(token);
+    const response =
+        await api(authHeader).post<{
+            invitation: Invitation;
+            token: string;
+        }>(
+            "/api/invitations",
+            {
+                appId: NEXO_APP_ID,
 
-    if (!invitation) {
-        throw new InvitationNotFoundError();
-    }
+                email: input.email,
 
-    return invitation;
-}
+                resourceType:
+                    input.resourceType,
 
-export async function accept(
-    token: string,
-    acceptedBy: number
-) {
-    const invitation =
-        await repository.findByToken(token);
+                resourceId:
+                    input.resourceId,
 
-    if (!invitation) {
-        throw new InvitationNotFoundError();
-    }
+                resourceAction:
+                    input.resourceAction ??
+                    "join",
 
-    if (invitation.status !== "pending") {
-        throw new InvitationNotPendingError();
-    }
-
-    if (
-        new Date(invitation.expires_at) <
-        new Date()
-    ) {
-        await repository.updateStatus(
-            invitation.id,
-            "expired"
+                role: input.role,
+            }
         );
 
-        throw new InvitationExpiredError();
-    }
-
-    if (invitation.resource_type === "organization") {
-        await organizationRepository.addMember(
-            invitation.resource_id,
-            acceptedBy,
-            invitation.role
-        );
-    }
-
-    await repository.updateStatus(
-        invitation.id,
-        "accepted"
-    );
-
-    return {
-        resourceId: invitation.resource_id,
-        resourceType: invitation.resource_type,
-        role: invitation.role,
-        email: invitation.email,
-        acceptedBy,
-    };
-}
-
-export async function decline(
-    token: string
-) {
-    const invitation =
-        await repository.findByToken(token);
-
-    if (!invitation) {
-        throw new InvitationNotFoundError();
-    }
-
-    if (invitation.status !== "pending") {
-        throw new InvitationNotPendingError();
-    }
-
-    if (
-        new Date(invitation.expires_at) <
-        new Date()
-    ) {
-        await repository.updateStatus(
-            invitation.id,
-            "expired"
-        );
-
-        throw new InvitationExpiredError();
-    }
-
-    return repository.updateStatus(
-        invitation.id,
-        "declined"
-    );
-}
-
-export async function revoke(
-    id: string
-) {
-    const invitation =
-        await repository.findById(id);
-
-    if (!invitation) {
-        throw new InvitationNotFoundError();
-    }
-
-    return repository.revoke(id);
-}
-
-export async function expire(
-    id: string
-) {
-    const invitation =
-        await repository.findById(id);
-
-    if (!invitation) {
-        throw new InvitationExpiredError();
-    }
-
-    return repository.updateStatus(
-        invitation.id,
-        "expired"
-    );
+    return response.data;
 }
 
 export async function listByResource(
     resourceType: string,
-    resourceId: string
+    resourceId: string,
+    authHeader: string
 ) {
-    return repository.findByResource(
-        resourceType,
-        resourceId
-    );
+    const response =
+        await api(authHeader).get<Invitation[]>(
+            "/api/invitations",
+            {
+                params: {
+                    appId: NEXO_APP_ID,
+                    resourceType,
+                    resourceId,
+                },
+            }
+        );
+
+    return response.data;
 }
 
-export async function listPendingByEmail(
-    email: string
+export async function listMine(
+    authHeader: string
 ) {
-    return repository.findPendingByEmail(
-        email
-    );
+    const response =
+        await api(authHeader).get<Invitation[]>(
+            "/api/invitations/mine"
+        );
+
+    return response.data;
 }
 
-export async function list(
-    resourceType: string,
-    resourceId: string
+export async function getByToken(
+    token: string,
+    authHeader: string
 ) {
-    return repository.findByResource(
-        resourceType,
-        resourceId
-    );
+    const response =
+        await api(authHeader).get<Invitation>(
+            `/api/invitations/token/${token}`
+        );
+
+    return response.data;
+}
+
+export async function validate(
+    token: string,
+    authHeader: string
+) {
+    const response =
+        await api(authHeader).get<Invitation>(
+            `/api/invitations/token/${token}/validate`
+        );
+
+    return response.data;
+}
+
+export async function accept(
+    invitationId: string,
+    authHeader: string
+) {
+    const response =
+        await api(authHeader).post<Invitation>(
+            `/api/invitations/${invitationId}/accept`
+        );
+
+    return response.data;
+}
+
+export async function decline(
+    invitationId: string,
+    authHeader: string
+) {
+    const response =
+        await api(authHeader).post<Invitation>(
+            `/api/invitations/${invitationId}/decline`
+        );
+
+    return response.data;
+}
+
+export async function revoke(
+    invitationId: string,
+    authHeader: string
+) {
+    const response =
+        await api(authHeader).post<Invitation>(
+            `/api/invitations/${invitationId}/revoke`
+        );
+
+    return response.data;
 }
