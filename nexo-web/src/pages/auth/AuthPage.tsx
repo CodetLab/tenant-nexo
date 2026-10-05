@@ -5,21 +5,27 @@ import { MouseDepth } from "../../components/effects/mouseDepth/MouseDepth";
 import styles from "./Auth.module.css";
 
 export const AuthPage: React.FC = () => {
-  const [view, setView] = useState<"login" | "register">("login");
+    const [view, setView] = useState<
+        "login" | "register"
+    >("login");
 
-  return (
-    <MouseDepth className={styles.page}>
-      {view === "login" ? (
-        <LoginCard
-          onSwitchToRegister={() => setView("register")}
-        />
-      ) : (
-        <RegisterCard
-          onSwitchToLogin={() => setView("login")}
-        />
-      )}
-    </MouseDepth>
-  );
+    return (
+        <MouseDepth className={styles.page}>
+            {view === "login" ? (
+                <LoginCard
+                    onSwitchToRegister={() =>
+                        setView("register")
+                    }
+                />
+            ) : (
+                <RegisterCard
+                    onSwitchToLogin={() =>
+                        setView("login")
+                    }
+                />
+            )}
+        </MouseDepth>
+    );
 };
 
 export default AuthPage;

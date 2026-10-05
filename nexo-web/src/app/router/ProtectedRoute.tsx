@@ -1,7 +1,7 @@
 // src/app/router/ProtectedRoute.tsx
 
 import { Navigate } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../hooks/useAuth";
 import { Outlet } from "react-router";
 
 export const ProtectedRoute = () => {

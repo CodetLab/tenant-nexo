@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { register } from "../services/auth.service";
+import { resolveError } from "../components/feedback/errorResolver";
 import type { RegisterInput } from "../types/auth.types";
 
 export function useRegister() {
@@ -14,9 +15,13 @@ export function useRegister() {
 
     try {
       await register(data);
+
       setSuccess("Cuenta creada exitosamente");
-    } catch (err: any) {
-      setError(err?.response?.data?.error || "Error al registrar usuario");
+
+      return true;
+    } catch (error: unknown) {
+      setError(resolveError(error));
+      return false;
     } finally {
       setLoading(false);
     }

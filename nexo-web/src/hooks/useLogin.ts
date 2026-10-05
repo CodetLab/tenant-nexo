@@ -1,38 +1,41 @@
 import { useState } from "react";
-import { login } from "../services/auth.service";
-import type { LoginInput } from "../types/auth.types";
+
+import { useNotification } from "../context/NotificationContext";
+import { resolveError } from "../components/feedback/errorResolver";
+
+import { login as loginRequest } from "../services/auth.service";
+
+interface LoginData {
+    email: string;
+    password: string;
+    appSlug: string;
+}
 
 export function useLogin() {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+    const { notify } = useNotification();
 
-  const submit = async (data: LoginInput) => {
-    setLoading(true);
-    setError("");
-    setSuccess("");
+    const [loading, setLoading] = useState(false);
 
-    try {
-      const response = await login(data);
+    const submit = async (data: LoginData) => {
+        setLoading(true);
 
-      setSuccess("Inicio de sesión exitoso");
+        try {
+            const response = await loginRequest(data);
 
-      return response;
-    } catch (err: any) {
-      setError(
-        err?.response?.data?.error ||
-        err?.response?.data?.message ||
-        "Error al iniciar sesión"
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
+            return response;
+        } catch (error: unknown) {
+            console.error("Error en login:", error);
 
-  return {
-    submit,
-    loading,
-    error,
-    success,
-  };
+            notify.error(resolveError(error));
+
+            return null;
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return {
+        submit,
+        loading,
+    };
 }

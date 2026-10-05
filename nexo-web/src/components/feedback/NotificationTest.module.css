@@ -1,0 +1,44 @@
+.panel {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 10000;
+
+    width: min(340px, calc(100vw - 40px));
+    padding: 16px;
+
+    color: #f5f5f5;
+    background: #171719;
+    border: 1px solid #39393d;
+    border-radius: 8px;
+}
+
+.panel h2 {
+    margin: 0 0 12px;
+    font-size: 16px;
+}
+
+.buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.buttons button {
+    padding: 7px 10px;
+    color: inherit;
+    background: #29292d;
+    border: 1px solid #48484e;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.buttons button:hover {
+    background: #38383e;
+}
+
+.panel p {
+    margin: 12px 0 0;
+    font-size: 12px;
+    color: #b5b5bd;
+}

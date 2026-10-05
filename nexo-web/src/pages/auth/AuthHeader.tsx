@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./Auth.module.css";
+import styles from "./AuthHeader.module.css";
 
 interface AuthHeaderProps {
   title: string;

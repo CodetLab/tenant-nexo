@@ -27,6 +27,7 @@ export interface AuthResponse {
   token: string;
   user: User;
   emailVerified: boolean;
+
   sessions: {
     session_id: string;
     device: string;

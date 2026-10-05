@@ -2,9 +2,7 @@ import Card from "../../components/ui/Card/Card";
 
 import styles from "./DashboardPage.module.css";
 
-import {
-  useAuth
-} from "../../context/AuthContext";
+import { useAuth } from "../../hooks/useAuth";
 
 import SessionManager from "../../components/account/sessions/SessionManager";
 import AccountPage from "../../components/account/account/Account";
