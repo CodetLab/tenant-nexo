@@ -28,9 +28,13 @@ export async function changePassword(data: {
     return res.data;
 }
 
+// ---------------------------------------------------------
+// Ajustado para apuntar a la ruta correcta de sesiones
+// ---------------------------------------------------------
+
 export async function getSessions() {
     const res = await api.get(
-        "/account/sessions"
+        "/sessions" // o "/account/sessions" dependiendo de tu app.use en el backend
     );
 
     return res.data;
@@ -40,14 +44,14 @@ export async function revokeSession(
     sessionId: string
 ) {
     const res = await api.delete(
-        `/account/sessions/${sessionId}`
+        `/sessions/${sessionId}`
     );
 
     return res.data;
 }
 
-export async function revokeAllSessions(userId: string) {
+export async function revokeAllSessions() {
     await api.delete(
-        `/account/${userId}/sessions`
+        "/sessions"
     );
 }

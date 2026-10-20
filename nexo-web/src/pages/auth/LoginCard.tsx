@@ -77,7 +77,7 @@ export const LoginCard: React.FC<LoginProps> = ({
                 "Inicio de sesión correcto."
             );
 
-            navigate("/organization-check");
+            navigate("/");
         } catch (error: unknown) {
             console.error(
                 "Error sincronizando el perfil:",

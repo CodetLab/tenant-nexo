@@ -1,9 +1,9 @@
-import { upsertProfile } from "./sync.repository";
+import { upsertNexoProfile } from "./sync.repository";
 
-export async function syncUser(
+export async function syncNexoUser(
   tenantUserId: number,
   name: string,
   email: string,
 ) {
-  return await upsertProfile(tenantUserId, name, email);
+  return await upsertNexoProfile(tenantUserId, name, email);
 }

@@ -1,44 +1,45 @@
+
 import { useState } from "react";
-
 import { useNavigate } from "react-router-dom";
-
-import {
-    createOrganization,
-} from "../../../services/organization.service";
+import { createOrganization } from "../../../services/organization.service";
 
 export default function CreateOrganizationPage() {
-    const navigate =
-        useNavigate();
+    const navigate = useNavigate();
 
-    const [name, setName] =
-        useState("");
-
-    const [slug, setSlug] =
-        useState("");
-
-    const [loading, setLoading] =
-        useState(false);
+    const [name, setName] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
 
     async function handleSubmit(
-        e: React.FormEvent
+        e: React.FormEvent<HTMLFormElement>
     ) {
         e.preventDefault();
 
+        const normalizedName = name.trim();
+
+        if (!normalizedName || normalizedName.length > 120) {
+            setError(
+                "El nombre debe tener entre 1 y 120 caracteres."
+            );
+            return;
+        }
+
         try {
             setLoading(true);
+            setError("");
 
             await createOrganization({
-                name,
-                slug,
+                name: normalizedName,
             });
 
-            navigate("/", {
+            navigate("/organizations", {
                 replace: true,
             });
-        } catch (error) {
-            console.error(error);
-            alert(
-                "No se pudo crear la organización"
+        } catch (err) {
+            console.error("[ORGANIZATIONS:CREATE]", err);
+
+            setError(
+                "No se pudo crear la organización. Intentá nuevamente."
             );
         } finally {
             setLoading(false);
@@ -52,53 +53,40 @@ export default function CreateOrganizationPage() {
                 margin: "80px auto",
             }}
         >
-            <h1>
-                Crear organización
-            </h1>
+            <h1>Crear organización</h1>
 
             <p>
-                No perteneces a ninguna
-                organización.
+                Creá una organización para comenzar a trabajar
+                en Nexo.
             </p>
 
-            <form
-                onSubmit={handleSubmit}
-            >
+            <form onSubmit={handleSubmit}>
                 <div>
-                    <label>
+                    <label htmlFor="organization-name">
                         Nombre
                     </label>
 
                     <input
+                        id="organization-name"
+                        type="text"
                         value={name}
-                        onChange={(e) =>
-                            setName(
-                                e.target.value
-                            )
-                        }
+                        onChange={e => setName(e.target.value)}
                         placeholder="Escuela Especial Nuevo Horizonte"
+                        maxLength={120}
+                        required
+                        disabled={loading}
                     />
                 </div>
 
-                <div>
-                    <label>
-                        Slug
-                    </label>
-
-                    <input
-                        value={slug}
-                        onChange={(e) =>
-                            setSlug(
-                                e.target.value
-                            )
-                        }
-                        placeholder="nuevo-horizonte"
-                    />
-                </div>
+                {error && (
+                    <p role="alert" style={{ color: "red" }}>
+                        {error}
+                    </p>
+                )}
 
                 <button
                     type="submit"
-                    disabled={loading}
+                    disabled={loading || !name.trim()}
                 >
                     {loading
                         ? "Creando..."

@@ -2,9 +2,6 @@
 
 import { createBrowserRouter } from "react-router-dom";
 
-import OrganizationCheckPage
-  from "../../pages/Organizations/components/OrganizationCheckPage";
-
 import CreateOrganizationPage
   from "../../pages/Organizations/components/CreateOrganizationPage";
 import MainLayout from "../layouts/MainLayout";
@@ -42,11 +39,6 @@ export const router = createBrowserRouter([
   {
     element: <ProtectedRoute />,
     children: [
-      {
-        path: "/organization-check",
-        element: <OrganizationCheckPage />,
-      },
-
       {
         path: "/organizations/create",
         element: <CreateOrganizationPage />,

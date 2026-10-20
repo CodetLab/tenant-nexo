@@ -2,7 +2,7 @@ import axios from "axios";
 import { authInterceptor } from "./auth.interceptor";
 
 const localApi = axios.create({
-    baseURL: import.meta.env.VITE_API_URL_NEXO,
+    baseURL: import.meta.env.VITE_API_URL_LOCAL,
 
 
     headers: {

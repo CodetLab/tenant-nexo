@@ -1,16 +1,16 @@
 import { Request, Response } from "express";
-import { syncUser } from "./sync.service";
+import { syncNexoUser } from "./sync.service";
 
 export async function syncController(
     req: Request,
-    res: Response
+    res: Response,
 ) {
     try {
         const tenantUserId = req.context?.userId;
         const email = req.context?.email;
         const name = req.context?.name;
 
-        if (!tenantUserId) {
+        if (tenantUserId == null) {
             return res.status(401).json({
                 error: "User not authenticated",
             });
@@ -22,22 +22,21 @@ export async function syncController(
             });
         }
 
-        const profile = await syncUser(
+        const profile = await syncNexoUser(
             tenantUserId,
+            name,
             email,
-            name
         );
 
         return res.status(200).json({
             success: true,
             profile,
         });
-
     } catch (error) {
-        console.error("SYNC ERROR", error);
+        console.error("SENTINEL SYNC ERROR", error);
 
         return res.status(500).json({
-            error: "Failed to sync user",
+            error: "Failed to sync Sentinel profile",
         });
     }
 }

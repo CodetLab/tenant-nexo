@@ -1,13 +1,12 @@
+
 import localApi from "../api/local.client";
 
 export type CreateOrganizationDto = {
     name: string;
-    slug: string;
 };
 
 export type UpdateOrganizationDto = {
-    name: string;
-    slug: string;
+    name?: string;
 };
 
 export type InviteMemberDto = {
@@ -25,7 +24,9 @@ export function createOrganization(
     payload: CreateOrganizationDto
 ) {
     return localApi
-        .post("/organizations", payload)
+        .post("/organizations", {
+            name: payload.name.trim(),
+        })
         .then(res => res.data);
 }
 
@@ -62,35 +63,25 @@ export function getInvitations(
     organizationId: string
 ) {
     return localApi
-        .get(
-            `/organizations/${organizationId}/invitations`
-        )
+        .get(`/organizations/${organizationId}/invitations`)
         .then(res => res.data);
 }
 
-export function acceptInvitation(
-    token: string
-) {
+export function acceptInvitation(token: string) {
     return localApi
         .post(`/invitations/${token}/accept`)
         .then(res => res.data);
 }
 
-export function declineInvitation(
-    token: string
-) {
+export function declineInvitation(token: string) {
     return localApi
         .post(`/invitations/${token}/decline`)
         .then(res => res.data);
 }
 
-export function revokeInvitation(
-    invitationId: string
-) {
+export function revokeInvitation(invitationId: string) {
     return localApi
-        .patch(
-            `/invitations/${invitationId}/revoke`
-        )
+        .patch(`/invitations/${invitationId}/revoke`)
         .then(res => res.data);
 }
 
@@ -105,12 +96,8 @@ export function removeMember(
         .then(res => res.data);
 }
 
-export function leaveOrganization(
-    organizationId: string
-) {
+export function leaveOrganization(organizationId: string) {
     return localApi
-        .post(
-            `/organizations/${organizationId}/leave`
-        )
+        .post(`/organizations/${organizationId}/leave`)
         .then(res => res.data);
 }
