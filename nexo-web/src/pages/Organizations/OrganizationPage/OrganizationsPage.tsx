@@ -2,9 +2,7 @@ import { useEffect, useState } from "react";
 
 import styles from "./OrganizationsPage.module.css";
 
-import {
-    getOrganizations,
-} from "../../../services/organization.service";
+import { getOrganizations } from "../../../services/organization.service";
 
 import OrganizationCard from "../components/OrganizationCard";
 import EditOrganizationModal from "../components/EditOrganizationModal";
@@ -14,213 +12,180 @@ import LeaveOrganizationModal from "../components/LeaveOrganizationModal";
 import { useNavigate } from "react-router-dom";
 
 type Organization = {
-    id: string;
-    name: string;
-    slug: string;
-    created_at: string;
+  id: string;
+  name: string;
+  slug: string;
+  created_at: string;
 };
 
 export default function OrganizationsPage() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const [organizations, setOrganizations] =
-        useState<Organization[]>([]);
+  const [organizations, setOrganizations] = useState<Organization[]>([]);
 
-    const [selectedOrganization, setSelectedOrganization] =
-        useState<Organization | null>(null);
+  const [selectedOrganization, setSelectedOrganization] =
+    useState<Organization | null>(null);
 
-    const [loading, setLoading] =
-        useState(true);
+  const [loading, setLoading] = useState(true);
 
-    const [error, setError] =
-        useState("");
+  const [error, setError] = useState("");
 
-    const [showEdit, setShowEdit] =
-        useState(false);
+  const [showEdit, setShowEdit] = useState(false);
 
-    const [showInvite, setShowInvite] =
-        useState(false);
+  const [showInvite, setShowInvite] = useState(false);
 
-    const [showMembers, setShowMembers] =
-        useState(false);
+  const [showMembers, setShowMembers] = useState(false);
 
-    const [showLeave, setShowLeave] =
-        useState(false);
+  const [showLeave, setShowLeave] = useState(false);
+
+  async function loadOrganizations() {
+    try {
+      setLoading(true);
+
+      const data = await getOrganizations();
+
+      setOrganizations(data);
+
+      if (data.length === 0) {
+        navigate("/organizations/create", {
+          replace: true,
+        });
+      }
+    } catch (err) {
+      console.error(err);
+      setError("No se pudieron cargar las organizaciones.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    let cancelled = false;
 
     async function loadOrganizations() {
-        try {
-            setLoading(true);
+      try {
+        setLoading(true);
+        setError("");
 
-            const data =
-                await getOrganizations();
+        const data = await getOrganizations();
 
-            setOrganizations(data);
-
-            if (data.length === 0) {
-                navigate("/organizations/create", {
-                    replace: true,
-                });
-            }
-        } catch (err) {
-            console.error(err);
-            setError(
-                "No se pudieron cargar las organizaciones."
-            );
-        } finally {
-            setLoading(false);
+        if (!cancelled) {
+          setOrganizations(data);
         }
+      } catch (err) {
+        console.error(err);
+
+        if (!cancelled) {
+          setError("No se pudieron cargar las organizaciones.");
+        }
+      } finally {
+        if (!cancelled) {
+          setLoading(false);
+        }
+      }
     }
 
-    useEffect(() => {
-        loadOrganizations();
-    }, []);
+    void loadOrganizations();
 
-    if (loading) {
-        return (
-            <div className={styles.container}>
-                <p>Cargando organizaciones...</p>
-            </div>
-        );
-    }
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
-    if (error) {
-        return (
-            <div className={styles.container}>
-                <p className={styles.error}>
-                    {error}
-                </p>
-            </div>
-        );
-    }
-
+  if (loading) {
     return (
-        <div className={styles.container}>
-            <div className={styles.header}>
-                <h1>Mis organizaciones</h1>
-            </div>
-
-            {organizations.length === 0 ? (
-                <div className={styles.empty}>
-                    <h2>
-                        No perteneces a ninguna organización.
-                    </h2>
-
-                    <p>
-                        Crea una organización para comenzar.
-                    </p>
-                </div>
-            ) : (
-                <div className={styles.grid}>
-                    {organizations.map(
-                        (organization) => (
-                            <OrganizationCard
-                                key={
-                                    organization.id
-                                }
-                                organization={
-                                    organization
-                                }
-                                onEdit={() => {
-                                    setSelectedOrganization(
-                                        organization
-                                    );
-
-                                    setShowEdit(
-                                        true
-                                    );
-                                }}
-                                onMembers={() => {
-                                    setSelectedOrganization(
-                                        organization
-                                    );
-
-                                    setShowMembers(
-                                        true
-                                    );
-                                }}
-                                onInvite={() => {
-                                    setSelectedOrganization(
-                                        organization
-                                    );
-
-                                    setShowInvite(
-                                        true
-                                    );
-                                }}
-                                onLeave={() => {
-                                    setSelectedOrganization(
-                                        organization
-                                    );
-
-                                    setShowLeave(
-                                        true
-                                    );
-                                }}
-                            />
-                        )
-                    )}
-                </div>
-            )}
-
-            {selectedOrganization && (
-                <>
-                    <EditOrganizationModal
-                        open={showEdit}
-                        organization={
-                            selectedOrganization
-                        }
-                        onClose={() =>
-                            setShowEdit(false)
-                        }
-                        onUpdated={
-                            loadOrganizations
-                        }
-                    />
-
-                    <InviteMemberModal
-                        open={showInvite}
-                        organizationId={
-                            selectedOrganization.id
-                        }
-                        onClose={() =>
-                            setShowInvite(
-                                false
-                            )
-                        }
-                    />
-
-                    <MembersModal
-                        open={showMembers}
-                        organizationId={
-                            selectedOrganization.id
-                        }
-                        onClose={() =>
-                            setShowMembers(
-                                false
-                            )
-                        }
-                    />
-
-                    <LeaveOrganizationModal
-                        open={showLeave}
-                        organizationId={
-                            selectedOrganization.id
-                        }
-                        onClose={() =>
-                            setShowLeave(
-                                false
-                            )
-                        }
-                        onLeave={() => {
-                            setShowLeave(
-                                false
-                            );
-
-                            loadOrganizations();
-                        }}
-                    />
-                </>
-            )}
-        </div>
+      <div className={styles.container}>
+        <p>Cargando organizaciones...</p>
+      </div>
     );
+  }
+
+  if (error) {
+    return (
+      <div className={styles.container}>
+        <p className={styles.error}>{error}</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className={styles.container}>
+      <div className={styles.header}>
+        <h1>Mis organizaciones</h1>
+
+        <button type="button" onClick={() => navigate("/organizations/create")}>
+          Crear organización
+        </button>
+      </div>
+
+      {organizations.length === 0 ? (
+        <div className={styles.empty}>
+          <p>Crea una organización para comenzar.</p>
+        </div>
+      ) : (
+        <div className={styles.grid}>
+          {organizations.map((organization) => (
+            <OrganizationCard
+              key={organization.id}
+              organization={organization}
+              onEdit={() => {
+                setSelectedOrganization(organization);
+
+                setShowEdit(true);
+              }}
+              onMembers={() => {
+                setSelectedOrganization(organization);
+
+                setShowMembers(true);
+              }}
+              onInvite={() => {
+                setSelectedOrganization(organization);
+
+                setShowInvite(true);
+              }}
+              onLeave={() => {
+                setSelectedOrganization(organization);
+
+                setShowLeave(true);
+              }}
+            />
+          ))}
+        </div>
+      )}
+
+      {selectedOrganization && (
+        <>
+          <EditOrganizationModal
+            open={showEdit}
+            organization={selectedOrganization}
+            onClose={() => setShowEdit(false)}
+            onUpdated={loadOrganizations}
+          />
+
+          <InviteMemberModal
+            open={showInvite}
+            organizationId={selectedOrganization.id}
+            onClose={() => setShowInvite(false)}
+          />
+
+          <MembersModal
+            open={showMembers}
+            organizationId={selectedOrganization.id}
+            onClose={() => setShowMembers(false)}
+          />
+
+          <LeaveOrganizationModal
+            open={showLeave}
+            organizationId={selectedOrganization.id}
+            onClose={() => setShowLeave(false)}
+            onLeave={() => {
+              setShowLeave(false);
+
+              loadOrganizations();
+            }}
+          />
+        </>
+      )}
+    </div>
+  );
 }
