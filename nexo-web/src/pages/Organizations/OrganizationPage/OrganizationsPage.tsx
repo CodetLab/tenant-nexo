@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import styles from "./OrganizationsPage.module.css";
 
@@ -9,88 +10,52 @@ import EditOrganizationModal from "../components/EditOrganizationModal";
 import InviteMemberModal from "../components/InviteMemberModal";
 import MembersModal from "../components/MembersModal";
 import LeaveOrganizationModal from "../components/LeaveOrganizationModal";
-import { useNavigate } from "react-router-dom";
 
 type Organization = {
   id: string;
   name: string;
   slug: string;
   created_at: string;
+  [key: string]: unknown;
 };
 
 export default function OrganizationsPage() {
   const navigate = useNavigate();
 
   const [organizations, setOrganizations] = useState<Organization[]>([]);
-
   const [selectedOrganization, setSelectedOrganization] =
     useState<Organization | null>(null);
 
   const [loading, setLoading] = useState(true);
-
   const [error, setError] = useState("");
 
   const [showEdit, setShowEdit] = useState(false);
-
   const [showInvite, setShowInvite] = useState(false);
-
   const [showMembers, setShowMembers] = useState(false);
-
   const [showLeave, setShowLeave] = useState(false);
 
-  async function loadOrganizations() {
+  const loadOrganizations = useCallback(async () => {
     try {
       setLoading(true);
+      setError("");
 
       const data = await getOrganizations();
 
-      setOrganizations(data);
+      // Permite inspeccionar la respuesta real del backend.
+      console.log("Organizaciones recibidas:", data);
 
-      if (data.length === 0) {
-        navigate("/organizations/create", {
-          replace: true,
-        });
-      }
+      setOrganizations(data as Organization[]);
     } catch (err) {
       console.error(err);
       setError("No se pudieron cargar las organizaciones.");
     } finally {
       setLoading(false);
     }
-  }
+  }, []);
 
   useEffect(() => {
-    let cancelled = false;
-
-    async function loadOrganizations() {
-      try {
-        setLoading(true);
-        setError("");
-
-        const data = await getOrganizations();
-
-        if (!cancelled) {
-          setOrganizations(data);
-        }
-      } catch (err) {
-        console.error(err);
-
-        if (!cancelled) {
-          setError("No se pudieron cargar las organizaciones.");
-        }
-      } finally {
-        if (!cancelled) {
-          setLoading(false);
-        }
-      }
-    }
-
     void loadOrganizations();
-
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+  }, [loadOrganizations]);
 
   if (loading) {
     return (
@@ -104,6 +69,10 @@ export default function OrganizationsPage() {
     return (
       <div className={styles.container}>
         <p className={styles.error}>{error}</p>
+
+        <button type="button" onClick={() => void loadOrganizations()}>
+          Reintentar
+        </button>
       </div>
     );
   }
@@ -120,36 +89,49 @@ export default function OrganizationsPage() {
 
       {organizations.length === 0 ? (
         <div className={styles.empty}>
-          <p>Crea una organización para comenzar.</p>
+          <p>No pertenecés a ninguna organización todavía.</p>
         </div>
       ) : (
         <div className={styles.grid}>
-          {organizations.map((organization) => (
-            <OrganizationCard
-              key={organization.id}
-              organization={organization}
-              onEdit={() => {
-                setSelectedOrganization(organization);
+          {organizations.map((organization) => {
+            /*
+             * IMPORTANTE:
+             * Adaptar esta condición a la respuesta real del backend.
+             * No asumir que un campo de propietario existe hasta verificarlo.
+             */
+            const isOwner =
+              organization.isOwner === true || organization.is_owner === true;
 
-                setShowEdit(true);
-              }}
-              onMembers={() => {
-                setSelectedOrganization(organization);
-
-                setShowMembers(true);
-              }}
-              onInvite={() => {
-                setSelectedOrganization(organization);
-
-                setShowInvite(true);
-              }}
-              onLeave={() => {
-                setSelectedOrganization(organization);
-
-                setShowLeave(true);
-              }}
-            />
-          ))}
+            return (
+              <OrganizationCard
+                key={organization.id}
+                organization={organization}
+                isOwner={isOwner}
+                onEdit={() => {
+                  setSelectedOrganization(organization);
+                  setShowEdit(true);
+                }}
+                onMembers={() => {
+                  setSelectedOrganization(organization);
+                  setShowMembers(true);
+                }}
+                onInvite={() => {
+                  setSelectedOrganization(organization);
+                  setShowInvite(true);
+                }}
+                onLeave={() => {
+                  setSelectedOrganization(organization);
+                  setShowLeave(true);
+                }}
+                onDelete={() => {
+                  // No eliminar hasta conectar el endpoint y confirmar.
+                  window.alert(
+                    "La eliminación de organizaciones todavía no está implementada.",
+                  );
+                }}
+              />
+            );
+          })}
         </div>
       )}
 
@@ -159,7 +141,10 @@ export default function OrganizationsPage() {
             open={showEdit}
             organization={selectedOrganization}
             onClose={() => setShowEdit(false)}
-            onUpdated={loadOrganizations}
+            onUpdated={async () => {
+              setShowEdit(false);
+              await loadOrganizations();
+            }}
           />
 
           <InviteMemberModal
@@ -178,10 +163,10 @@ export default function OrganizationsPage() {
             open={showLeave}
             organizationId={selectedOrganization.id}
             onClose={() => setShowLeave(false)}
-            onLeave={() => {
+            onLeave={async () => {
               setShowLeave(false);
-
-              loadOrganizations();
+              setSelectedOrganization(null);
+              await loadOrganizations();
             }}
           />
         </>

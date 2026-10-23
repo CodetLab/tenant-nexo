@@ -1,39 +1,35 @@
 export type InvitationStatus =
-    | "pending"
-    | "accepted"
-    | "declined"
-    | "revoked"
-    | "expired";
+  "pending" | "accepted" | "declined" | "revoked" | "expired";
 
 export interface Invitation {
-    id: string;
+  id: string;
 
-    appId: number;
-    invitedBy: number;
+  appId: number;
+  invitedBy: number;
 
-    email: string;
+  email: string;
 
-    resourceType: string;
-    resourceId: string;
-    resourceAction: string;
+  resourceType: string;
+  resourceId: string;
+  resourceAction: string;
 
-    role: string | null;
+  role: string | null;
 
-    status: InvitationStatus;
+  status: InvitationStatus;
 
-    expiresAt: string;
+  expiresAt: string;
 
-    acceptedAt: string | null;
-    acceptedBy: number | null;
+  acceptedAt: string | null;
+  acceptedBy: number | null;
 
-    createdAt: string;
-    updatedAt: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface CreateInvitationInput {
-    resourceType: string;
-    resourceId: string;
-    resourceAction?: string;
-    email: string;
-    role: string;
+  resourceType: string;
+  resourceId: string;
+  resourceAction?: string;
+  email: string;
+  role: string;
 }

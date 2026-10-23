@@ -1,6 +1,5 @@
 import { Router } from "express";
 
-import students from "../modules/students/students.routes";
 import observations from "../modules/observations/observations.routes";
 import meetings from "../modules/meetings/meetings.routes";
 import strategies from "../modules/strategies/strategies.routes";
@@ -11,7 +10,6 @@ import invitationRoutes from "../modules/invitations/invitation.routes";
 
 const router = Router();
 router.use("/sync", syncRoutes);
-router.use("/students", students);
 router.use("/observations", observations);
 router.use("/meetings", meetings);
 router.use("/strategies", strategies);
